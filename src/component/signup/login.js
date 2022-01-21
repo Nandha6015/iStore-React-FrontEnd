@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Link } from "react-router-dom";
 
 import loginlogo from "./img/66.svg";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   return (
     <div>
       <section style={{ "background-color": "lightgrey" }}>
@@ -27,6 +30,7 @@ const Login = () => {
                   <div className="col-md-6 col-lg-7 d-flex align-items-center">
                     <div className="card-body p-4 p-lg-5 text-black">
                       <form onSubmit={loginUser}>
+                        {/* to do */}
                         <div
                           className="d-flex align-items-center mb-3"
                           style={{ height: "0.5 rem" }}
@@ -52,6 +56,8 @@ const Login = () => {
                             type="email"
                             id="form2Example17"
                             className="form-control form-control-lg"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                           />
                           <label className="form-label" for="form2Example17">
                             Email address
@@ -63,6 +69,8 @@ const Login = () => {
                             name="userPassword"
                             type="password"
                             id="form2Example27"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                             className="form-control form-control-lg"
                           />
                           <label className="form-label" for="form2Example27">

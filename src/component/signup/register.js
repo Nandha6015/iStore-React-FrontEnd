@@ -1,6 +1,9 @@
 import React from "react";
 
 const Register = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   return (
     <div>
       <section style={{ "background-color": "lightgrey" }}>
@@ -29,8 +32,10 @@ const Register = () => {
                               type="text"
                               id="form3Example1c"
                               className="form-control"
+                              value={name}
+                              onChange={(e) => setName(e.target.value)}
                             />
-                            <label className="form-label" for="form3Example1c">
+                            <label className="form-label" for="form3Example1c ">
                               Your Name
                             </label>
                           </div>
@@ -45,6 +50,8 @@ const Register = () => {
                               type="email"
                               id="form3Example3c"
                               className="form-control"
+                              value={email}
+                              onChange={(e) => setEmail(e.target.value)}
                             />
                             <label className="form-label" for="form3Example3c">
                               Your Email
@@ -61,6 +68,8 @@ const Register = () => {
                               type="password"
                               id="form3Example4c"
                               className="form-control"
+                              value={password}
+                              onChange={(e) => setPassword(e.target.value)}
                             />
                             <label className="form-label" for="form3Example4c">
                               Password

@@ -2,6 +2,11 @@ import React from "react";
 
 import "./profile.css";
 const Profile = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+  const [address, setAddress] = useState("");
   return (
     <div>
       <section className="vh-100" style={{ "background-color": "white" }}>
@@ -33,7 +38,6 @@ const Profile = () => {
                             className="text-muted"
                             id="Name"
                             name="userName"
-                            disabled={!editable}
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                           />
@@ -47,7 +51,6 @@ const Profile = () => {
                             className="text-muted "
                             id="Email"
                             name="userEmail"
-                            disabled={!editable}
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                           />
@@ -61,7 +64,6 @@ const Profile = () => {
                             className="text-muted"
                             id="Phone"
                             name="userPhone"
-                            disabled={!editable}
                             value={phone}
                             onChange={(e) => setPhone(e.target.value)}
                           />
@@ -75,7 +77,6 @@ const Profile = () => {
                             className="text-muted"
                             id="Password"
                             name="userPassword"
-                            disabled={!editable}
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                           />
@@ -89,7 +90,6 @@ const Profile = () => {
                             className="text-muted"
                             id="Address"
                             name="userAddress"
-                            disabled={!editable}
                             value={address}
                             onChange={(e) => setAddress(e.target.value)}
                           />
@@ -107,7 +107,7 @@ const Profile = () => {
                           onclick="submit();"
                           // style="float:right; width: 60px;"
                           hidden={!editable}
-                          onClick={() => onSubmit()}
+                          onClick={() => onSubmit()} // to do
                         >
                           Submit
                         </button>
@@ -115,7 +115,7 @@ const Profile = () => {
                           className="btn btn-warning"
                           type="button"
                           id="edit"
-                          onClick={() => setEditable(true)}
+                          onClick={() => setEditable(true)} // to do
                           hidden={editable}
                           // style="float:right; width: 60px;"
                         >
