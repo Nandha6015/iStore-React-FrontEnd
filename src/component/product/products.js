@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./style.css";
 import { Link } from "react-router-dom";
+import { productContext } from "../Api";
 
 const Products = () => {
+  const product = useContext(productContext);
+  {
+    {
+      product;
+    }
+  }
   return (
     <div>
       <div className="row m-2">
