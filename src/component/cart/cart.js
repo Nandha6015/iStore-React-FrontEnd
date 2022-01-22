@@ -2,6 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Cart = () => {
+  const [productImgSrc, setproductImgSrc] = useState("");
+  const [productName, setproductName] = useState("");
+  const [productPrice, setproductPrice] = useState("");
+  const [productNos, setproductNos] = useState("");
+  const [subTotal, setsubTotal] = useState("");
+
   return (
     <div>
       <section className="totals py-5">

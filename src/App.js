@@ -1,5 +1,7 @@
 import logo from "./logo.svg";
 import "./App.css";
+import Api from "./component/Api";
+
 import Navbar from "./component/navbar";
 import Login from "./component/signup/Login";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -18,7 +20,7 @@ import ProductAdd from "./component/product/productadd";
 import ProductEdit from "./component/product/productedit";
 import Tracker from "./component/tracker/tracker";
 import OrderList from "./component/order/orderlist";
-
+import ContactForm from "./component/contact/contactform";
 function App() {
   return (
     <div>
@@ -39,6 +41,7 @@ function App() {
           <Route exact path={"/productedit"} component={ProductEdit} />
           <Route exact path={"/tracker"} component={Tracker} />
           <Route exact path={"/orderlist"} component={OrderList} />
+          <Route exact path={"/contactform"} component={ContactForm} />
         </Switch>
         <Footer />
       </Router>

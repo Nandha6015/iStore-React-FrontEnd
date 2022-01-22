@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 
 import "./style.css";
 
 const Orders = () => {
+  const [productImgSrc, setproductImgSrc] = useState("");
+  const [productName, setproductName] = useState("");
+  const [productPrice, setproductPrice] = useState("");
+  const [productNos, setproductNos] = useState("");
+
   return (
     <div>
       <div
@@ -24,61 +29,77 @@ const Orders = () => {
           </h1>
         </div>
       </div>
-      <section className="totals py-5">
-        <div className="container-fluid">
-          <div className="row">
-            <div className="col text-uppercase text-center">
-              <div className="row">
-                <div className="col-10 mx-auto col-md-2">
-                  <p className="text-uppercase">products</p>
-                </div>
-                <div className="col-10 mx-auto col-md-4">
-                  <p className="text-uppercase">name of products</p>
-                </div>
-                <div className="col-10 mx-auto col-md-2">
-                  <p className="text-uppercase">price</p>
-                </div>
-                <div className="col-10 mx-auto col-md-2">
-                  <p className="text-uppercase">quantity</p>
-                </div>
-                <div className="col-10 mx-auto col-md-2">
-                  <p className="text-uppercase">total</p>
-                </div>
-              </div>
-              <hr></hr>
-              {/* order list */}
-              {orders.map((product) => (
-                <div className="row my-3 align-items-center">
-                  <div className="col-10 mx-auto col-md-2 my-3">
-                    <img
-                      src={product.productImgSrc}
-                      alt="hai"
-                      className="img-fluid"
-                    />
-                  </div>
 
-                  <div className="col-10 mx-auto col-md-4">
-                    <p className="text-uppercase">{product.productName}</p>
-                  </div>
-                  <div className="col-10 mx-auto col-md-2">
-                    <p className="text-uppercase">{product.productPrice}</p>
-                  </div>
-                  <div className="col-10 mx-auto col-md-2">
-                    <div className="d-flex justify-content-center align-items-center">
-                      {product.productNos}
-                    </div>
-                  </div>
-                  <div className="col-10 mx-auto col-md-2">
-                    <p className="text-uppercase">
-                      {product.productNos * product.productPrice}
-                    </p>
-                  </div>
-                </div>
-              ))}
+      <section className="totals py-2 my-1">
+        <div className="text-uppercase">
+          <div className="row ">
+            <div className=" col-md-2  text-center">
+              <p className="text-uppercase">products</p>
+            </div>
+            <div className=" col-md-4  text-center">
+              <p className="text-uppercase">name of products</p>
+            </div>
+            <div className=" col-md-2  text-center">
+              <p className="text-uppercase">price</p>
+            </div>
+            <div className=" col-md-1">
+              <p className="text-uppercase ">quantity</p>
+            </div>
+            <div className=" col-md-1  text-center">
+              <p className="text-uppercase">total</p>
+            </div>
+            <div className=" col-md-2  text-center ">
+              <p className="text-uppercase">Track</p>
             </div>
           </div>
         </div>
       </section>
+
+      {/* order list */}
+      {orders.map((product) => (
+        <div>
+          <div className="card my-3 shadow">
+            <div className="row px-5 py-4">
+              <div className="row ">
+                <div
+                  className="col-sm-12 col-md-2 col-lg-3 p-3"
+                  style={{ maxHeight: 200 }}
+                >
+                  <img
+                    src={product.productImgSrc}
+                    alt="hai"
+                    className="img-fluid"
+                  />
+                </div>
+
+                <div className="col-sm-6 col-md-4 p-2">
+                  <p className="text-uppercase">{product.productName}</p>
+                </div>
+                <div className="col-sm-4  col-md-1">
+                  <p className="text-uppercase">{product.productPrice}</p>
+                </div>
+                <div className="col-sm-2 col-md-1">
+                  <div className="d-flex justify-content-center align-items-center">
+                    {product.productNos}
+                  </div>
+                </div>
+                <div className="col-sm-2 col-md-2  text-center">
+                  <p className="text-uppercase">
+                    {product.productNos * product.productPrice}
+                  </p>
+                </div>
+                <div className="col-sm-6 col-md-1 ">
+                  <Link to={"/tracker"}>
+                    <button type="button" class="btn btn-warning">
+                      Track
+                    </button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
     </div>
   );
 };
