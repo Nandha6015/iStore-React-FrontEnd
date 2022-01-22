@@ -1,14 +1,31 @@
-import React, { useContext } from "react";
-import "./style.css";
+import React, { useState, useEffect } from "react";
+import "../home/style.css";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const Products = () => {
+  const id = localStorage.getItem("id");
+  const isAdmin = localStorage.getItem("role") === "ADMIN" ? true : false;
   const [products, setproduct] = useState([]);
   useEffect(() => {
     axios.get(`${URL}/products`).then((products) => {
       setproduct(products.data);
     });
   }, []);
+  const deleteProduct = (id) => {
+    axios.delete(`${URL}/manage/products/${id}`);
+    setproduct((oldProducts) => {
+      return oldProducts.filter((prod) => prod.productId !== id);
+    });
+  };
+  const sortPrice = (ascending = true) => {
+    const sortedProducts = products.sort((a, b) =>
+      ascending
+        ? parseInt(a.productPrice) - parseInt(b.productPrice)
+        : parseInt(b.productPrice) - parseInt(a.productPrice)
+    );
+    setproduct(sortedProducts);
+  };
 
   return (
     <div>
@@ -42,7 +59,7 @@ const Products = () => {
                 </select>
               </div>
             </div>
-            {user === null ? null : user.userRole === "ADMIN" ? (
+            {id === null ? null : isAdmin ? (
               <div className="card shadow my-5 p-5 justify-content-center">
                 <Link to={"./productadd"} className="justify-content-center">
                   <i className="fas fa-plus-circle mx-3"></i>
@@ -86,8 +103,8 @@ const Products = () => {
                   </div>
                   <div>
                     <p>Free delivery</p>
-                    {user !== null ? (
-                      user.userRole === "ADMIN" ? (
+                    {id !== null ? (
+                      isAdmin ? (
                         <p>
                           InStock:
                           <span className="text-danger">
@@ -106,8 +123,8 @@ const Products = () => {
                     <li className="col-12">{product.productKeyFeature3}</li>
                   </ul>
                 </div>
-                {user !== null ? (
-                  user.userRole === "ADMIN" ? (
+                {id !== null ? (
+                  isAdmin ? (
                     <div className="col-2">
                       <div
                         className="d-flex flex-column justify-content-around"

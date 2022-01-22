@@ -1,6 +1,9 @@
-import React from "react";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
 const ProductEdit = () => {
+  const { id } = useParams();
   const [name, setname] = useState("");
   const [price, setprice] = useState("");
   const [desc, setdesc] = useState("");
@@ -19,6 +22,18 @@ const ProductEdit = () => {
       setkf3(product.data.productKeyFeature3);
     });
   }, []);
+  const editProduct = (event) => {
+    event.preventDefault();
+    axios.put(`${URL}/manage/products/${id}`, {
+      productName: name,
+      productPrice: price,
+      productDescription: desc,
+      productKeyFeature1: kf1,
+      productKeyFeature2: kf2,
+      productKeyFeature3: kf3,
+      productQuantityInStock: stock,
+    });
+  };
 
   return (
     <div className="container my-5">

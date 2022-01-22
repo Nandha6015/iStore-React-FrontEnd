@@ -1,9 +1,13 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import "./style.css";
-import logo from "./img/logo.png";
+import { Link, useLocation } from "react-router-dom";
+import "../home/style.css";
+import logo from "../img/logo.png";
 
 const Navbar = () => {
+  const id = localStorage.getItem("id");
+  const isAdmin = localStorage.getItem("role") === "ADMIN" ? true : false;
+  const { pathname } = useLocation();
+
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-light">
@@ -88,7 +92,7 @@ const Navbar = () => {
           <div className="cart-items">10</div>
         </Link>
         <Link
-          to={loggedIn ? "/login" : "/profile"}
+          to={id === null ? "/login" : "/profile"}
           className="navbar-icon mx-2 navbar-cart-icon "
           id="login-profile"
         >

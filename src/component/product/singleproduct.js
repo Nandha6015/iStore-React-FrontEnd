@@ -1,7 +1,10 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
 const Singleproudct = () => {
-  const { id } = useParams();
+  const id = localStorage.getItem("id");
+  const { pid } = useParams();
   const [product, setProduct] = useState();
   const [activeImage, setActiveImage] = useState("imgSrc1");
   const [inCart, setinCart] = useState(false);
@@ -11,12 +14,42 @@ const Singleproudct = () => {
     axios.get(`${URL}/products/${id}`).then((result) => {
       setProduct(result.data);
     });
-    if (user !== null) {
+    if (id !== null) {
       axios
         .get(`${URL}/user/${localStorage.getItem("Id")}/cart/${id}`)
         .then((res) => setinCart(res.data));
     }
   });
+  const addToCart = () => {
+    if (id === null) {
+      setnotice("Login to add to cart...");
+      setTimeout(() => {
+        setnotice("");
+      }, 2000);
+    } else {
+      axios
+        .post(`${URL}/user/${id}/cart/${pid}`)
+        .then((res) => {
+          setnotice(res.data);
+          setTimeout(() => {
+            setnotice("");
+          }, 2000);
+        })
+        .then(() => setinCart(true));
+    }
+  };
+
+  const removeFromCart = () => {
+    axios
+      .delete(`${URL}/user/${id}/cart/${pid}`)
+      .then((res) => {
+        setnotice(res.data);
+        setTimeout(() => {
+          setnotice("");
+        }, 2000);
+      })
+      .then(() => setinCart(false));
+  };
   return (
     <div>
       <section className="single-product py-5">

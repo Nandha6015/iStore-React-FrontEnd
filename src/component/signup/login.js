@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { Link } from "react-router-dom";
 
-import loginlogo from "./img/66.svg";
+import loginlogo from "../img/66.svg";
 import axios from "axios";
 import { URL } from "../../App";
 

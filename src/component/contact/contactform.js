@@ -1,4 +1,4 @@
-import "./contactform.css";
+import "./contacform.css";
 import React from "react";
 
 class ContactForm extends React.Component {

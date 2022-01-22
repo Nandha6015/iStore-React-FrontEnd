@@ -1,7 +1,10 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 
 import "./profile.css";
 const Profile = () => {
+  const id = localStorage.getItem("id");
+  const [editable, setEditable] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -13,7 +16,7 @@ const Profile = () => {
       .put(
         `${URL}/user/${localStorage.getItem("Id")}`,
         {
-          userId: user.userId,
+          userId: id,
           userName: name,
           userEmail: email,
           userPhoneNumber: phone,

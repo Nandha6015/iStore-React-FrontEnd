@@ -1,17 +1,63 @@
-import React from "react";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
+const SHIPPING = 0;
 const Cart = () => {
+  const id = localStorage.getItem("id");
+  const token = localStorage.getItem("token");
+
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    if (user !== null)
-      axios
-        .get(`${URL}/user/${localStorage.getItem("Id")}/cart`)
-        .then((products) => {
-          setProducts(products.data);
-        });
-  }, [user]);
+    if (id !== null)
+      axios.get(`${URL}/user/${id}/cart`).then((products) => {
+        setProducts(products.data);
+      });
+  }, []);
+
+  const addQuantity = (productId) => {
+    setProducts((oldProducts) =>
+      oldProducts.map((product) => {
+        if (product.productId === productId)
+          updateCart(productId, product.productNos + 1);
+        return product.productId === productId
+          ? {
+              ...product,
+              productNos: product.productNos + 1,
+            }
+          : product;
+      })
+    );
+  };
+  const reduceQuantity = (productId) => {
+    setProducts((oldProducts) =>
+      oldProducts.map((product) => {
+        if (product.productId === productId)
+          updateCart(productId, product.productNos - 1);
+        return product.productId === productId
+          ? {
+              ...product,
+              productNos:
+                product.productNos - 1 < 1 ? 1 : product.productNos - 1,
+            }
+          : product;
+      })
+    );
+  };
+  const updateCart = (productId, productNos) => {
+    axios.put(`${URL}/user/${id}/cart/${productId}?nos=${productNos}`);
+  };
+  const deleteCartItem = (productId) => {
+    setProducts((oldProducts) =>
+      oldProducts.filter((product) => product.productId !== productId)
+    );
+    axios.delete(`${URL}/user/${id}/cart/${productId}`);
+  };
+  const subTotal = products.reduce(
+    (total, product) => total + product.productPrice * product.productNos,
+    0
+  );
   return (
     <div>
       <section className="totals py-5">

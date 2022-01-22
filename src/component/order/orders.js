@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
-import "./style.css";
+import "../home/style.css";
 
 const Orders = () => {
+  const id = localStorage.getItem("Id");
   const [orders, setOrders] = useState([]);
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    axios
-      .get(`${URL}/user/${localStorage.getItem("Id")}/orders`)
-      .then((result) => {});
+    axios.get(`${URL}/user/${id}/orders`).then((result) => {});
   }, []);
 
   return (

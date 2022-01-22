@@ -1,15 +1,15 @@
 import React from "react";
 import "./style.css";
-import imglogo1 from "./img/company-logos/company-logo-1.png";
-import imglogo2 from "./img/company-logos/company-logo-2.png";
-import imglogo3 from "./img/company-logos/company-logo-3.png";
-import imglogo4 from "./img/company-logos/company-logo-4.png";
-import imglogo5 from "./img/company-logos/company-logo-5.png";
-import imglogo6 from "./img/company-logos/company-logo-6.png";
-import ipad from "./img/cagetogoryImg/ipad-category.png";
-import airpod from "./img/cagetogoryImg/airpods-category.png";
-import imac from "./img/cagetogoryImg/imac-category.png";
-import iphone from "./img/cagetogoryImg/iphone-category.png";
+import imglogo1 from "../img/company-logos/company-logo-1.png";
+import imglogo2 from "../img/company-logos/company-logo-2.png";
+import imglogo3 from "../img/company-logos/company-logo-3.png";
+import imglogo4 from "../img/company-logos/company-logo-4.png";
+import imglogo5 from "../img/company-logos/company-logo-5.png";
+import imglogo6 from "../img/company-logos/company-logo-6.png";
+import ipad from "../img/cagetogoryImg/ipad-category.png";
+import airpod from "../img/cagetogoryImg/airpods-category.png";
+import imac from "../img/cagetogoryImg/imac-category.png";
+import iphone from "../img/cagetogoryImg/iphone-category.png";
 import { Link } from "react-router-dom";
 
 const Home = () => {

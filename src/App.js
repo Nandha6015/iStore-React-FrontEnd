@@ -1,8 +1,6 @@
-import logo from "./logo.svg";
 import "./App.css";
-
-import Navbar from "./component/navbar";
-import Login from "./component/signup/Login";
+import Navbar from "./component/navbar/navbar";
+import Login from "./component/signup/login";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./component/home/home";
 import Footer from "./component/footer/footer";
@@ -19,11 +17,12 @@ import ProductEdit from "./component/product/productedit";
 import Tracker from "./component/tracker/tracker";
 import OrderList from "./component/order/orderlist";
 import ContactForm from "./component/contact/contactform";
+export const URL = "http://localhost:8080";
 function App() {
   return (
     <div>
       <Router>
-        <Navbar loggedIn={user === null} />
+        <Navbar />
         <Switch>
           <Route exact path={"/"} component={Home} />
           <Route exact path={"/login"} component={Login} />

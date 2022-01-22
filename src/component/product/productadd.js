@@ -1,4 +1,5 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 
 const ProductAdd = () => {
   const [name, setname] = useState("");
@@ -12,7 +13,7 @@ const ProductAdd = () => {
   const addProduct = (event) => {
     event.preventDefault();
     const formData = Object.fromEntries(new FormData(event.target));
-    axios.post(`${URL}/manage/products`, formData);
+    axios.post(`${URL}/add/products`, formData);
   };
   return (
     <div className="container my-5">
