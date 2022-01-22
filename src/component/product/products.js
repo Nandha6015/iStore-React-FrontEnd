@@ -1,22 +1,14 @@
 import React, { useContext } from "react";
 import "./style.css";
 import { Link } from "react-router-dom";
-// import { productContext } from "../Api";
 
 const Products = () => {
-  // const product = useContext(productContext);
-  // {
-  //   {
-  //     product;
-  //   }
-  // }
-
-  const [productImgSrc, setproductImgSrc] = useState("");
-  const [productName, setproductName] = useState("");
-  const [productQuantityInStock, setproductQuantityInStock] = useState("");
-  const [productKeyFeature1, setproductKeyFeature1] = useState("");
-  const [productKeyFeature2, setproductKeyFeature2] = useState("");
-  const [productKeyFeature3, setproductKeyFeature3] = useState("");
+  const [products, setproduct] = useState([]);
+  useEffect(() => {
+    axios.get(`${URL}/products`).then((products) => {
+      setproduct(products.data);
+    });
+  }, []);
 
   return (
     <div>

@@ -1,6 +1,19 @@
 import React from "react";
 
 const ProductAdd = () => {
+  const [name, setname] = useState("");
+  const [price, setprice] = useState("");
+  const [desc, setdesc] = useState("");
+  const [kf1, setkf1] = useState("");
+  const [kf2, setkf2] = useState("");
+  const [kf3, setkf3] = useState("");
+  const [stock, setstock] = useState("");
+
+  const addProduct = (event) => {
+    event.preventDefault();
+    const formData = Object.fromEntries(new FormData(event.target));
+    axios.post(`${URL}/manage/products`, formData);
+  };
   return (
     <div className="container my-5">
       <div className="card shadow p-5">

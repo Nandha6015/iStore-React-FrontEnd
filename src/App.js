@@ -1,6 +1,5 @@
 import logo from "./logo.svg";
 import "./App.css";
-import Api from "./component/Api";
 
 import Navbar from "./component/navbar";
 import Login from "./component/signup/Login";
@@ -9,7 +8,6 @@ import Home from "./component/home/home";
 import Footer from "./component/footer/footer";
 import Orders from "./component/order/orders";
 import Register from "./component/signup/register";
-import Register from "./component/signup/login";
 import Products from "./component/product/products";
 import Cart from "./component/cart/cart";
 import Singleproduct from "./component/product/singleproduct";

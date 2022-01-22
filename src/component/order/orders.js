@@ -3,10 +3,14 @@ import React, { useState } from "react";
 import "./style.css";
 
 const Orders = () => {
-  const [productImgSrc, setproductImgSrc] = useState("");
-  const [productName, setproductName] = useState("");
-  const [productPrice, setproductPrice] = useState("");
-  const [productNos, setproductNos] = useState("");
+  const [orders, setOrders] = useState([]);
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`${URL}/user/${localStorage.getItem("Id")}/orders`)
+      .then((result) => {});
+  }, []);
 
   return (
     <div>

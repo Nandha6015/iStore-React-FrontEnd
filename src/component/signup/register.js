@@ -5,10 +5,11 @@ const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const signup = (event) => {
     event.preventDefault();
     axios
-      .post(`${URL}/register`, {
+      .post(`${URL}/signup`, {
         name: name,
         email: email,
         password: password,

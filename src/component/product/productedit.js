@@ -1,6 +1,25 @@
 import React from "react";
 
 const ProductEdit = () => {
+  const [name, setname] = useState("");
+  const [price, setprice] = useState("");
+  const [desc, setdesc] = useState("");
+  const [kf1, setkf1] = useState("");
+  const [kf2, setkf2] = useState("");
+  const [kf3, setkf3] = useState("");
+  const [stock, setstock] = useState("");
+  useEffect(() => {
+    axios.get(`${URL}/products/${id}`).then((product) => {
+      setname(product.data.productName);
+      setprice(product.data.productPrice);
+      setstock(product.data.productQuantityInStock);
+      setdesc(product.data.productDescription);
+      setkf1(product.data.productKeyFeature1);
+      setkf2(product.data.productKeyFeature2);
+      setkf3(product.data.productKeyFeature3);
+    });
+  }, []);
+
   return (
     <div className="container my-5">
       <div className="card shadow p-5">

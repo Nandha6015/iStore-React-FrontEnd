@@ -7,6 +7,37 @@ const Profile = () => {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [address, setAddress] = useState("");
+  const [error, setError] = useState("");
+  const onSubmit = () => {
+    axios
+      .put(
+        `${URL}/user/${localStorage.getItem("Id")}`,
+        {
+          userId: user.userId,
+          userName: name,
+          userEmail: email,
+          userPhoneNumber: phone,
+          userPassword: password,
+          userAddress: address,
+        },
+        {
+          headers: {
+            Authorization: `${localStorage.getItem("Token")}`,
+          },
+        }
+      )
+      .then((user) => {
+        if (user.data.status === 200) {
+          localStorage.setItem("Id", user.data.data.user.id);
+          localStorage.setItem("Token", user.data.data.token);
+          localStorage.setItem("Role", user.data.data.user.role);
+        } else {
+          setError(user.data.error.message);
+        }
+      });
+    setEditable(false);
+  };
+
   return (
     <div>
       <section className="vh-100" style={{ "background-color": "white" }}>

@@ -1,10 +1,22 @@
 import React from "react";
 
 const Singleproudct = () => {
-  const [productName, setproductName] = useState("");
-  const [productPrice, setproductPrice] = useState("");
-  const [productDescription, setproductDescription] = useState("");
+  const { id } = useParams();
+  const [product, setProduct] = useState();
+  const [activeImage, setActiveImage] = useState("imgSrc1");
+  const [inCart, setinCart] = useState(false);
+  const [notice, setnotice] = useState("");
 
+  useEffect(() => {
+    axios.get(`${URL}/products/${id}`).then((result) => {
+      setProduct(result.data);
+    });
+    if (user !== null) {
+      axios
+        .get(`${URL}/user/${localStorage.getItem("Id")}/cart/${id}`)
+        .then((res) => setinCart(res.data));
+    }
+  });
   return (
     <div>
       <section className="single-product py-5">

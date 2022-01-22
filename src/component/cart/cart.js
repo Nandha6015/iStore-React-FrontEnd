@@ -2,12 +2,16 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Cart = () => {
-  const [productImgSrc, setproductImgSrc] = useState("");
-  const [productName, setproductName] = useState("");
-  const [productPrice, setproductPrice] = useState("");
-  const [productNos, setproductNos] = useState("");
-  const [subTotal, setsubTotal] = useState("");
+  const [products, setProducts] = useState([]);
 
+  useEffect(() => {
+    if (user !== null)
+      axios
+        .get(`${URL}/user/${localStorage.getItem("Id")}/cart`)
+        .then((products) => {
+          setProducts(products.data);
+        });
+  }, [user]);
   return (
     <div>
       <section className="totals py-5">
