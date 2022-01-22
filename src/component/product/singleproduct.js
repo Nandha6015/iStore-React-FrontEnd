@@ -1,6 +1,10 @@
 import React from "react";
 
 const Singleproudct = () => {
+  const [productName, setproductName] = useState("");
+  const [productPrice, setproductPrice] = useState("");
+  const [productDescription, setproductDescription] = useState("");
+
   return (
     <div>
       <section className="single-product py-5">
