@@ -3,10 +3,31 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import loginlogo from "./img/66.svg";
+import axios from "axios";
+import { URL } from "../../App";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const loginUser = (event) => {
+    event.preventDefault();
+    axios
+      .post(`${URL}/login`, {
+        email: email,
+        password: password,
+      })
+      .then((user) => {
+        if (user.data.status === 200) {
+          localStorage.setItem("Id", user.data.data.user.id);
+          localStorage.setItem("Token", user.data.data.token);
+          localStorage.setItem("Role", user.data.data.user.role);
+        } else {
+          setError(user.data.error.message);
+        }
+      });
+  };
 
   return (
     <div>

@@ -1,9 +1,28 @@
 import React from "react";
-
+import axios from "axios";
+import { URL } from "../../App";
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const signup = (event) => {
+    event.preventDefault();
+    axios
+      .post(`${URL}/register`, {
+        name: name,
+        email: email,
+        password: password,
+      })
+      .then((user) => {
+        if (user.data.status === 200) {
+          localStorage.setItem("Id", user.data.data.user.id);
+          localStorage.setItem("Token", user.data.data.token);
+          localStorage.setItem("Role", user.data.data.user.role);
+        } else {
+          setError(user.data.error.message);
+        }
+      });
+  };
   return (
     <div>
       <section style={{ "background-color": "lightgrey" }}>

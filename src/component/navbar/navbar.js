@@ -48,6 +48,34 @@ const Navbar = () => {
                 Orders
               </Link>
             </li>
+            <li
+              className={`nav-item mx-2 ${
+                pathname === "/contactform" ? "nav-active" : ""
+              }`}
+            >
+              <Link to={"/contactform"} className="nav-link">
+                Contact Us
+              </Link>
+            </li>
+            <li
+              className={`nav-item mx-2 ${
+                pathname === "/userdetails" ? "nav-active" : ""
+              }`}
+            >
+              <Link to={"/userdetails"} className="nav-link">
+                User List
+              </Link>
+            </li>
+
+            <li
+              className={`nav-item mx-2 ${
+                pathname === "/orderlist" ? "nav-active" : ""
+              }`}
+            >
+              <Link to={"/orderlist"} className="nav-link">
+                Order List
+              </Link>
+            </li>
           </ul>
         </div>
         <div className="navbar-icons d-none d-lg-flex">
