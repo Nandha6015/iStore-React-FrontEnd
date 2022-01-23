@@ -1,14 +1,28 @@
+import axios from "axios";
 import React from "react";
 import { useState } from "react";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { URL } from "../../App";
 
 import "./payment.css";
 const Payment = () => {
+  const history = useHistory();
+  const id = localStorage.getItem("id");
+  const token = localStorage.getItem("token");
   const [tab, settab] = useState(1);
 
   const Tab = (index) => {
     settab(index);
   };
-  const pay = () => {};
+  const pay = () => {
+    axios
+      .post(`${URL}/user/${id}/orders`, null, {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then(() => history.push("/orders"));
+  };
   return (
     <div>
       <section className="vh-100" style={{ "background-color": "white" }}>

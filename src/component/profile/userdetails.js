@@ -1,11 +1,49 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect } from "react";
 import { useState } from "react";
+import page from "../img/pagenotfound.svg";
+import { URL } from "../../App";
+
 // function getRandomNumber() {
 //   return Math.floor(Math.random() * 100) + 1;
 // }
 
 const UserDetails = () => {
+  const id = localStorage.getItem("id");
+  const token = localStorage.getItem("token");
+  const isAdmin = localStorage.getItem("isAdmin") === "true" ? true : false;
+
   const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`${URL}/admin/users`, {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then((users) => {
+        setUsers(users.data.data.users);
+      });
+  }, []);
+
+  const able = (id) => {
+    axios.put(`${URL}/admin/users/${id}`, null, {
+      headers: {
+        Authorization: token,
+      },
+    });
+  };
+
+  if (isAdmin === false) {
+    return (
+      <div className="d-flex flex-column align-items-center p-5">
+        <img height={400} width={400} src={page} alt="Not Found" />
+        <p className="display-2">Page Not Found</p>
+      </div>
+    );
+  }
+
   return (
     <div className="container my-5">
       <div className="p-5 shadow-sm">
@@ -32,17 +70,19 @@ const UserDetails = () => {
                   />
                 </td>
                 <td className="col-sm-12 col-md-4 d-flex align-items-center">
-                  Username
+                  {user.name}
                 </td>
                 <td className="col-sm-12 col-md-4 d-flex align-items-center">
-                  Email
+                  {user.email}
                 </td>
                 <td className="col-sm-12 col-md-2 d-flex align-items-center">
-                  <button type="button" className="btn btn-danger">
-                    Disable
+                  <button
+                    type="button"
+                    className="btn btn-danger"
+                    onClick={() => able(user.id)}
+                  >
+                    {user.isEnable ? "Disable" : "Enable"}
                   </button>
-                  {/* </li> */}
-                  {/* </ul> */}
                 </td>
               </tr>
             ))}

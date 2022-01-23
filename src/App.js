@@ -17,7 +17,7 @@ import ProductEdit from "./component/product/productedit";
 import Tracker from "./component/tracker/tracker";
 import OrderList from "./component/order/orderlist";
 import ContactForm from "./component/contact/contactform";
-export const URL = "http://localhost:8089";
+export const URL = "http://localhost:8080";
 function App() {
   return (
     <div>
@@ -28,14 +28,14 @@ function App() {
           <Route exact path={"/login"} component={Login} />
           <Route exact path={"/signup"} component={Register} />
           <Route exact path={"/products"} component={Products} />
-          <Route exact path={"/Singleproduct"} component={Singleproduct} />
+          <Route exact path={"/products/:pid"} component={Singleproduct} />
           <Route exact path={"/cart"} component={Cart} />
           <Route exact path={"/orders"} component={Orders} />
           <Route exact path={"/payment"} component={Payment} />
           <Route exact path={"/profile"} component={Profile} />
           <Route exact path={"/userdetails"} component={UserDetails} />
-          <Route exact path={"/productadd"} component={ProductAdd} />
-          <Route exact path={"/productedit"} component={ProductEdit} />
+          <Route exact path={"/addproduct"} component={ProductAdd} />
+          <Route exact path={"/updateproduct"} component={ProductEdit} />
           <Route exact path={"/tracker"} component={Tracker} />
           <Route exact path={"/orderlist"} component={OrderList} />
           <Route exact path={"/contactform"} component={ContactForm} />

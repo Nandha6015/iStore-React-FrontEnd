@@ -1,9 +1,13 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { URL } from "../../App";
 
 import "./profile.css";
 const Profile = () => {
   const id = localStorage.getItem("id");
+  const isAdmin = localStorage.getItem("isAdmin") === "true" ? true : false;
+  const token = localStorage.getItem("token");
+
   const [editable, setEditable] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -11,32 +15,43 @@ const Profile = () => {
   const [password, setPassword] = useState("");
   const [address, setAddress] = useState("");
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    axios
+      .get(`${URL}/user/${id}`, {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then((user) => {
+        setName(user.data.data.profile.name);
+        setEmail(user.data.data.profile.email);
+        setPhone(user.data.data.profile.phone);
+        setPassword(user.data.data.profile.password);
+        setAddress(user.data.data.profile.address);
+      });
+  }, []);
+
   const onSubmit = () => {
     axios
       .put(
-        `${URL}/user/${localStorage.getItem("Id")}`,
+        `${URL}/user/${id}`,
         {
-          userId: id,
-          userName: name,
-          userEmail: email,
-          userPhoneNumber: phone,
-          userPassword: password,
-          userAddress: address,
+          id: id,
+          name: name,
+          email: email,
+          phoneNumber: phone,
+          password: password,
+          address: address,
         },
         {
           headers: {
-            Authorization: `${localStorage.getItem("Token")}`,
+            Authorization: `${token}`,
           },
         }
       )
       .then((user) => {
-        if (user.data.status === 200) {
-          localStorage.setItem("Id", user.data.data.user.id);
-          localStorage.setItem("Token", user.data.data.token);
-          localStorage.setItem("Role", user.data.data.user.role);
-        } else {
-          setError(user.data.error.message);
-        }
+        setError(user.data.data.message);
       });
     setEditable(false);
   };
@@ -63,7 +78,7 @@ const Profile = () => {
                     </div>
                     <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
                       <img src="profile1.png" className="img-fluid" alt="hai" />
-
+                      <p className="text-danger">{error}</p>
                       <div className="d-flex flex-row align-items-center mb-4">
                         <i className="fas fa-user fa-lg me-3 fa-fw"></i>
                         <div className="form-outline flex-fill mb-0">

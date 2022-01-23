@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 import loginlogo from "../img/66.svg";
 import axios from "axios";
 import { URL } from "../../App";
+import { useHistory } from "react-router-dom";
 
 const Login = () => {
+  const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -17,18 +19,17 @@ const Login = () => {
         password: password,
       })
       .then((user) => {
-        if (user.data.status === 200) {
-          localStorage.setItem("id", user.data.data.user.id);
-          localStorage.setItem("token", user.data.data.user.token);
-          localStorage.setItem(
-            "isAdmin",
-            user.data.data.user.role === "ADMIN" ? true : false
-          );
-        } else {
-          setError(user.data.error.message);
-        }
+        localStorage.setItem("id", user.data.data.user.id);
+        localStorage.setItem("token", user.data.data.user.token);
+        localStorage.setItem(
+          "isAdmin",
+          user.data.data.user.role === "ADMIN" ? true : false
+        );
+        history.push("/");
       })
-      .catch(() => setError("User Not Founds"));
+      .catch((user) => {
+        setError(user.response.data.error[0].message);
+      });
   };
 
   return (

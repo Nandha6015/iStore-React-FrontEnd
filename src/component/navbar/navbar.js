@@ -5,7 +5,7 @@ import logo from "../img/logo.png";
 
 const Navbar = () => {
   const id = localStorage.getItem("id");
-  const isAdmin = localStorage.getItem("role") === "ADMIN" ? true : false;
+  const isAdmin = localStorage.getItem("isAdmin") === "true" ? true : false;
   const { pathname } = useLocation();
 
   return (

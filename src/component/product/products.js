@@ -5,16 +5,23 @@ import axios from "axios";
 import { URL } from "../../App";
 
 const Products = () => {
-  const id = localStorage.getItem("id");
   const isAdmin = localStorage.getItem("isAdmin");
+  const token = localStorage.getItem("token");
+
   const [products, setproducts] = useState([]);
+
   useEffect(() => {
     axios.get(`${URL}/products`).then((products) => {
       setproducts(products.data.data.products);
     });
   }, []);
+
   const deleteProduct = (id) => {
-    axios.delete(`${URL}/admin/products/${id}`);
+    axios.delete(`${URL}/admin/products/${id}`, {
+      headers: {
+        Authorization: token,
+      },
+    });
     setproducts((oldProducts) => {
       return oldProducts.filter((prod) => prod.id !== id);
     });
@@ -60,11 +67,11 @@ const Products = () => {
                 </select>
               </div>
             </div>
-            {isAdmin ? (
-              <div className="card shadow my-5 p-5 justify-content-center">
-                <Link to={"./productadd"} className="justify-content-center">
-                  <i className="fas fa-plus-circle mx-3"></i>
+            {isAdmin === "true" ? (
+              <div className="card shadow my-5 p-5 text-center">
+                <Link to={"/addproduct"}>
                   <button type="button" className="btn btn-primary">
+                    <i className="fas fa-plus-circle mx-3"></i>
                     Add products
                   </button>
                 </Link>
@@ -102,7 +109,7 @@ const Products = () => {
                   </div>
                   <div>
                     <p>Free delivery</p>
-                    {isAdmin ? (
+                    {isAdmin === "true" ? (
                       <p>
                         InStock:
                         <span className="text-danger">
@@ -127,19 +134,19 @@ const Products = () => {
 
                 <div className="col">
                   <ul className="row gap-2">
-                    <li className="col-12">{product.productKeyFeature1}</li>
-                    <li className="col-12">{product.productKeyFeature2}</li>
-                    <li className="col-12">{product.productKeyFeature3}</li>
+                    <li className="col-12">{product.keyFeature1}</li>
+                    <li className="col-12">{product.keyFeature2}</li>
+                    <li className="col-12">{product.keyFeature3}</li>
                   </ul>
                 </div>
-                {isAdmin ? (
+                {isAdmin === "true" ? (
                   <div className="col-2">
                     <div
                       className="d-flex flex-column justify-content-around"
                       style={{ height: "100%" }}
                     >
                       <Link
-                        to={`/productedit/${product.id}`}
+                        to={`/updateproduct/${product.id}`}
                         type="button"
                         className="btn btn-success"
                       >

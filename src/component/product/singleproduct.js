@@ -6,6 +6,7 @@ import { URL } from "../../App";
 const Singleproudct = () => {
   const id = localStorage.getItem("id");
   const token = localStorage.getItem("token");
+
   const { pid } = useParams();
   const [product, setProduct] = useState();
   const [activeImage, setActiveImage] = useState("imgSrc1");
@@ -13,19 +14,26 @@ const Singleproudct = () => {
   const [notice, setnotice] = useState("");
 
   useEffect(() => {
-    axios.get(`${URL}/products/${pid}`).then((result) => {
-      setProduct(result.data.data);
-    });
-    if (id !== null) {
-      axios
-        .get(`${URL}/user/${id}/cart/${pid}`, {
-          headers: {
-            Authorization: token,
-          },
-        })
-        .then((res) => setinCart(res.data));
-    }
-  });
+    axios
+      .get(`${URL}/products/${pid}`)
+      .then((result) => {
+        setProduct(result.data.data.product);
+      })
+      .then(() => {
+        if (id !== null) {
+          axios
+            .get(`${URL}/user/${id}/carts/${pid}`, {
+              headers: {
+                Authorization: token,
+              },
+            })
+            .then((res) =>
+              setinCart(res.data.data.message === "Not Found" ? false : true)
+            );
+        }
+      });
+  }, []);
+
   const addToCart = () => {
     if (id === null) {
       setnotice("Login to add to cart...");
@@ -34,9 +42,13 @@ const Singleproudct = () => {
       }, 2000);
     } else {
       axios
-        .post(`${URL}/user/${id}/cart/${pid}`)
+        .post(`${URL}/user/${id}/carts/${pid}`, "add", {
+          headers: {
+            Authorization: token,
+          },
+        })
         .then((res) => {
-          setnotice(res.data);
+          setnotice(res.data.data.message);
           setTimeout(() => {
             setnotice("");
           }, 2000);
@@ -47,15 +59,24 @@ const Singleproudct = () => {
 
   const removeFromCart = () => {
     axios
-      .delete(`${URL}/user/${id}/cart/${pid}`)
+      .delete(`${URL}/user/${id}/carts/${pid}`, {
+        headers: {
+          Authorization: token,
+        },
+      })
       .then((res) => {
-        setnotice(res.data);
+        setnotice(res.data.data.message);
         setTimeout(() => {
           setnotice("");
         }, 2000);
       })
       .then(() => setinCart(false));
   };
+
+  if (product === undefined) {
+    return null;
+  }
+
   return (
     <div>
       <section className="single-product py-5">
@@ -129,25 +150,21 @@ const Singleproudct = () => {
             </div>
 
             <div className="col-10 col-lg-8 mx-auto px-lg-5 single-product-info my-5">
-              <h2 className="text-uppercase my-2">{product.productName}</h2>
+              <h2 className="text-uppercase my-2">{product.name}</h2>
               <h3>
                 <span className="text-muted old-price ">
-                  ₹{product.productPrice * 1.5}{" "}
+                  ₹{product.price * 1.5}{" "}
                 </span>
-                <span className="mr-2">₹{product.productPrice}</span>
+                <span className="mr-2">₹{product.price}</span>
               </h3>
               <ul>
+                <li className="lead text-muted">{product.keyFeature1}</li>
                 <li className="lead text-muted">
-                  {product.productKeyFeature1}
-                </li>
-                <li className="lead text-muted">
-                  {product.productKeyFeature2}
-                  <li className="lead text-muted">
-                    {product.productKeyFeature3}
-                  </li>
+                  {product.keyFeature2}
+                  <li className="lead text-muted">{product.keyFeature3}</li>
                 </li>
               </ul>
-              <p className="lead text-muted">{product.productDescription}</p>
+              <p className="lead text-muted">{product.description}</p>
 
               {inCart ? (
                 <div>

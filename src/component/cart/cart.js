@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { URL } from "../../App";
+import emptyCartImg from "../img/empty_cart.svg";
 
 const SHIPPING = 0;
 const Cart = () => {
@@ -11,53 +13,72 @@ const Cart = () => {
 
   useEffect(() => {
     if (id !== null)
-      axios.get(`${URL}/user/${id}/cart`).then((products) => {
-        setProducts(products.data);
-      });
+      axios
+        .get(`${URL}/user/${id}/carts`, {
+          headers: {
+            Authorization: token,
+          },
+        })
+        .then((products) => {
+          setProducts(products.data.data.cart.products);
+        });
   }, []);
 
-  const addQuantity = (productId) => {
+  const addQuantity = (id) => {
     setProducts((oldProducts) =>
       oldProducts.map((product) => {
-        if (product.productId === productId)
-          updateCart(productId, product.productNos + 1);
-        return product.productId === productId
+        if (product.id === id) updateCart(id, product.nos + 1);
+        return product.id === id
           ? {
               ...product,
-              productNos: product.productNos + 1,
+              nos: product.nos + 1,
             }
           : product;
       })
     );
   };
-  const reduceQuantity = (productId) => {
+  const reduceQuantity = (id) => {
     setProducts((oldProducts) =>
       oldProducts.map((product) => {
-        if (product.productId === productId)
-          updateCart(productId, product.productNos - 1);
-        return product.productId === productId
+        if (product.id === id) updateCart(id, product.nos - 1);
+        return product.id === id
           ? {
               ...product,
-              productNos:
-                product.productNos - 1 < 1 ? 1 : product.productNos - 1,
+              nos: product.nos - 1 < 1 ? 1 : product.nos - 1,
             }
           : product;
       })
     );
   };
-  const updateCart = (productId, productNos) => {
-    axios.put(`${URL}/user/${id}/cart/${productId}?nos=${productNos}`);
+  const updateCart = (pid, nos) => {
+    axios.put(`${URL}/user/${id}/cart/${pid}?nos=${nos}`, null, {
+      headers: {
+        Authorization: token,
+      },
+    });
   };
-  const deleteCartItem = (productId) => {
+  const deleteCartItem = (pid) => {
     setProducts((oldProducts) =>
-      oldProducts.filter((product) => product.productId !== productId)
+      oldProducts.filter((product) => product.id !== pid)
     );
-    axios.delete(`${URL}/user/${id}/cart/${productId}`);
+    axios.delete(`${URL}/user/${id}/cart/${pid}`, {
+      headers: {
+        Authorization: token,
+      },
+    });
   };
   const subTotal = products.reduce(
-    (total, product) => total + product.productPrice * product.productNos,
+    (total, product) => total + product.price * product.nos,
     0
   );
+  if (products.length === 0)
+    return (
+      <div className="d-flex flex-column align-items-center p-5">
+        <img height={400} width={400} src={emptyCartImg} alt="empty cart" />
+        <p className="display-2">Cart is Empty</p>
+      </div>
+    );
+
   return (
     <div>
       <section className="totals py-5">
@@ -91,32 +112,30 @@ const Cart = () => {
                 <div className="row my-3 align-items-center">
                   <div className="col-10 mx-auto col-md-2 my-3">
                     <img
-                      src={product.productImgSrc}
+                      src={product.img}
                       alt="product"
                       className="img-fluid"
                     />
                   </div>
 
                   <div className="col-10 mx-auto col-md-3">
-                    <p className="text-uppercase">{product.productName}</p>
+                    <p className="text-uppercase">{product.name}</p>
                   </div>
                   <div className="col-10 mx-auto col-md-2">
-                    <p className="text-uppercase">{product.productPrice}</p>
+                    <p className="text-uppercase">{product.price}</p>
                   </div>
                   <div className="col-10 mx-auto col-md-2">
                     <div className="d-flex justify-content-center align-items-center">
                       <button
                         className="btn btn-black mx-1"
-                        onClick={() => reduceQuantity(product.productId)}
+                        onClick={() => reduceQuantity(product.id)}
                       >
                         -
                       </button>
-                      <span className="btn btn-black mx-1">
-                        {product.productNos}
-                      </span>
+                      <span className="btn btn-black mx-1">{product.nos}</span>
                       <button
                         className="btn btn-black mx-1"
-                        onClick={() => addQuantity(product.productId)}
+                        onClick={() => addQuantity(product.id)}
                       >
                         +
                       </button>
@@ -124,7 +143,7 @@ const Cart = () => {
                   </div>
                   <div className="col-10 mx-auto col-md-2">
                     <p className="text-uppercase">
-                      {product.productNos * product.productPrice}
+                      {product.nos * product.price}
                     </p>
                   </div>
                   <div className="col-10 mx-auto col-md-1">
@@ -132,7 +151,7 @@ const Cart = () => {
                       style={{
                         cursor: "pointer",
                       }}
-                      onClick={() => deleteCartItem(product.productId)}
+                      onClick={() => deleteCartItem(product.id)}
                     >
                       <i className="fas fa-trash" />
                     </span>
