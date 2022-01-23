@@ -1,10 +1,11 @@
 import React from "react";
-
+import { useState } from "react";
 // function getRandomNumber() {
 //   return Math.floor(Math.random() * 100) + 1;
 // }
 
 const UserDetails = () => {
+  const [users, setUsers] = useState([]);
   return (
     <div className="container my-5">
       <div className="p-5 shadow-sm">

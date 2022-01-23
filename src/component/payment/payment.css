@@ -17,7 +17,7 @@
 }
 
 .active-tabs {
-  background: white;
+  background: lightblue;
   border-bottom: 1px solid transparent;
 }
 
@@ -29,8 +29,8 @@
   left: 50%;
   transform: translateX(-50%);
   width: calc(100% + 2px);
-  height: 5px;
-  background: #fdbe02;
+  /* height: 5px;
+  background: lightblue; */
 }
 
 button {
