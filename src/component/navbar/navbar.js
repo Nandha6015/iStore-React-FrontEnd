@@ -71,7 +71,7 @@ const Navbar = () => {
               </Link>
             </li>
             {isAdmin ? (
-              <div>
+              <>
                 <li
                   className={`nav-item mx-2 ${
                     pathname === "/userdetails" ? "nav-active" : ""
@@ -91,7 +91,7 @@ const Navbar = () => {
                     Order List
                   </Link>
                 </li>
-              </div>
+              </>
             ) : null}
           </ul>
         </div>

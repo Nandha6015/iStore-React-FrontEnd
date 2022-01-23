@@ -1,8 +1,35 @@
-import React from "react";
+import React, { useEffect } from "react";
+import page from "../img/pagenotfound.svg";
 import { useState } from "react";
+import axios from "axios";
 
 const OrderList = () => {
-  const [users, setUsers] = useState([]);
+  const id = localStorage.getItem("id");
+  const isAdmin = localStorage.getItem("isAdmin") === "true" ? true : false;
+  const token = localStorage.getItem("token");
+
+  const [orders, setorders] = useState([]);
+  useEffect(() => {
+    axios
+      .get(`${URL}/admin/users`, {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then((orders) => {
+        setorders(orders.data.data.orders.products);
+      });
+  }, []);
+
+  if (isAdmin === false) {
+    return (
+      <div className="d-flex flex-column align-items-center p-5">
+        <img height={400} width={400} src={page} alt="Not Found" />
+        <p className="display-2">Page Not Found</p>
+      </div>
+    );
+  }
+
   return (
     <div className="container  ">
       <div className="p-5 shadow-sm">
@@ -17,31 +44,30 @@ const OrderList = () => {
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => (
+            {orders.map((order) => (
               <tr className="row">
                 <td className="col-sm-12 col-md-2 d-flex align-items-center">
-                  Order id
+                  {order.id}
                 </td>
                 <td className="col-sm-12 col-md-2 p-4">
                   <img
                     className="img-responsive mr-3"
                     height="50px"
                     width="50px"
-                    src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                    // src={`https://avatars.dicebear.com/api/female/${getRandomNumber()}.svg`}
+                    src={order.img}
                     alt=""
                   />
                 </td>
 
                 <td className="col-sm-12 col-md-3 d-flex align-items-center">
-                  Product Name
+                  {order.pname}
                 </td>
                 <td className="col-sm-12 col-md-3 d-flex align-items-center">
-                  Username
+                  {order.name}
                 </td>
                 <td className="col-sm-12 col-md-2 d-flex align-items-center">
                   <button type="button" className="btn btn-danger">
-                    Order Tracker
+                    Tracker
                   </button>
                   {/* </li> */}
                   {/* </ul> */}

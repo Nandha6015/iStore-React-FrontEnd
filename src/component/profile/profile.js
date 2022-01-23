@@ -1,5 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import page from "../img/pagenotfound.svg";
 import { URL } from "../../App";
 
 import "./profile.css";
@@ -7,6 +9,8 @@ const Profile = () => {
   const id = localStorage.getItem("id");
   const isAdmin = localStorage.getItem("isAdmin") === "true" ? true : false;
   const token = localStorage.getItem("token");
+
+  const history = useHistory();
 
   const [editable, setEditable] = useState(false);
   const [name, setName] = useState("");
@@ -55,6 +59,21 @@ const Profile = () => {
       });
     setEditable(false);
   };
+
+  const logout = () => {
+    localStorage.removeItem("id");
+    localStorage.removeItem("token");
+    localStorage.removeItem("isAdmin");
+    history.push("/login");
+  };
+  if (id === null) {
+    return (
+      <div className="d-flex flex-column align-items-center p-5">
+        <img height={400} width={400} src={page} alt="Not Found" />
+        <p className="display-2">Page Not Found</p>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -146,7 +165,11 @@ const Profile = () => {
                       </div>
 
                       <div className="form-group mt-3">
-                        <button className="btn btn-danger m-2" type="button">
+                        <button
+                          className="btn btn-danger m-2"
+                          type="button"
+                          onClick={logout}
+                        >
                           LogOut
                         </button>
                         <button
