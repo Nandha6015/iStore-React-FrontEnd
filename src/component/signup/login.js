@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-
 import { Link } from "react-router-dom";
-
 import loginlogo from "../img/66.svg";
 import axios from "axios";
 import { URL } from "../../App";
@@ -20,13 +18,17 @@ const Login = () => {
       })
       .then((user) => {
         if (user.data.status === 200) {
-          localStorage.setItem("Id", user.data.data.user.id);
-          localStorage.setItem("Token", user.data.data.token);
-          localStorage.setItem("Role", user.data.data.user.role);
+          localStorage.setItem("id", user.data.data.user.id);
+          localStorage.setItem("token", user.data.data.user.token);
+          localStorage.setItem(
+            "isAdmin",
+            user.data.data.user.role === "ADMIN" ? true : false
+          );
         } else {
           setError(user.data.error.message);
         }
-      });
+      })
+      .catch(() => setError("User Not Founds"));
   };
 
   return (

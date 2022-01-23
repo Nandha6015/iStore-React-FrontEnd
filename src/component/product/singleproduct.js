@@ -1,9 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import { useParams } from "react-router-dom";
+import { URL } from "../../App";
 
 const Singleproudct = () => {
   const id = localStorage.getItem("id");
+  const token = localStorage.getItem("token");
   const { pid } = useParams();
   const [product, setProduct] = useState();
   const [activeImage, setActiveImage] = useState("imgSrc1");
@@ -11,12 +13,16 @@ const Singleproudct = () => {
   const [notice, setnotice] = useState("");
 
   useEffect(() => {
-    axios.get(`${URL}/products/${id}`).then((result) => {
-      setProduct(result.data);
+    axios.get(`${URL}/products/${pid}`).then((result) => {
+      setProduct(result.data.data);
     });
     if (id !== null) {
       axios
-        .get(`${URL}/user/${localStorage.getItem("Id")}/cart/${id}`)
+        .get(`${URL}/user/${id}/cart/${pid}`, {
+          headers: {
+            Authorization: token,
+          },
+        })
         .then((res) => setinCart(res.data));
     }
   });

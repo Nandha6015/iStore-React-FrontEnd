@@ -1,8 +1,12 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import { URL } from "../../App";
+import page from "../img/pagenotfound.svg";
 
 const ProductEdit = () => {
+  const isAdmin = localStorage.getItem("isAdmin");
+  const token = localStorage.getItem("token");
   const { id } = useParams();
   const [name, setname] = useState("");
   const [price, setprice] = useState("");
@@ -12,29 +16,52 @@ const ProductEdit = () => {
   const [kf3, setkf3] = useState("");
   const [stock, setstock] = useState("");
   useEffect(() => {
-    axios.get(`${URL}/products/${id}`).then((product) => {
-      setname(product.data.productName);
-      setprice(product.data.productPrice);
-      setstock(product.data.productQuantityInStock);
-      setdesc(product.data.productDescription);
-      setkf1(product.data.productKeyFeature1);
-      setkf2(product.data.productKeyFeature2);
-      setkf3(product.data.productKeyFeature3);
-    });
+    axios
+      .get(`${URL}/products/${id}`, {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then((product) => {
+        if (product.data.status === 200) {
+          setname(product.data.data.name);
+          setprice(product.data.data.price);
+          setstock(product.data.data.productQuantityInStock);
+          setdesc(product.data.data.productDescription);
+          setkf1(product.data.data.productKeyFeature1);
+          setkf2(product.data.data.productKeyFeature2);
+          setkf3(product.data.data.productKeyFeature3);
+        }
+      });
   }, []);
   const editProduct = (event) => {
     event.preventDefault();
-    axios.put(`${URL}/manage/products/${id}`, {
-      productName: name,
-      productPrice: price,
-      productDescription: desc,
-      productKeyFeature1: kf1,
-      productKeyFeature2: kf2,
-      productKeyFeature3: kf3,
-      productQuantityInStock: stock,
-    });
+    axios.put(
+      `${URL}/admin/products/${id}`,
+      {
+        name: name,
+        price: price,
+        description: desc,
+        keyFeature1: kf1,
+        keyFeature2: kf2,
+        keyFeature3: kf3,
+        quantityInStock: stock,
+      },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
   };
-
+  if (isAdmin === false) {
+    return (
+      <div className="d-flex flex-column align-items-center p-5">
+        <img height={400} width={400} src={page} alt="empty cart" />
+        <p className="display-2">Page Not Found</p>
+      </div>
+    );
+  }
   return (
     <div className="container my-5">
       <div className="card shadow p-5">

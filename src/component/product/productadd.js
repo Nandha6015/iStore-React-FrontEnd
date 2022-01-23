@@ -1,7 +1,12 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { URL } from "../../App";
+import page from "../img/pagenotfound.svg";
+import img from "../img/3.png";
 
 const ProductAdd = () => {
+  const isAdmin = localStorage.getItem("isAdmin");
+  const token = localStorage.getItem("token");
   const [name, setname] = useState("");
   const [price, setprice] = useState("");
   const [desc, setdesc] = useState("");
@@ -9,12 +14,47 @@ const ProductAdd = () => {
   const [kf2, setkf2] = useState("");
   const [kf3, setkf3] = useState("");
   const [stock, setstock] = useState("");
+  const [img1, setimg1] = useState(img);
+  const [img2, setimg2] = useState(img);
+  const [img3, setimg3] = useState(img);
+  const [img4, setimg4] = useState(img);
+  const [img5, setimg5] = useState(img);
 
   const addProduct = (event) => {
     event.preventDefault();
-    const formData = Object.fromEntries(new FormData(event.target));
-    axios.post(`${URL}/add/products`, formData);
+    axios.post(
+      `${URL}/admin/products`,
+      {
+        name: name,
+        price: price,
+        description: desc,
+        keyFeature1: kf1,
+        keyFeature2: kf2,
+        keyFeature3: kf3,
+        stock: stock,
+        imgsrc1: img1,
+        imgsrc2: img2,
+        imgsrc3: img3,
+        imgsrc4: img4,
+        imgsrc5: img5,
+      },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
   };
+
+  if (isAdmin === false) {
+    return (
+      <div className="d-flex flex-column align-items-center p-5">
+        <img height={400} width={400} src={page} alt="empty cart" />
+        <p className="display-2">Page Not Found</p>
+      </div>
+    );
+  }
+
   return (
     <div className="container my-5">
       <div className="card shadow p-5">
@@ -34,8 +74,10 @@ const ProductAdd = () => {
                     name="productName"
                     placeholder="PRODUCT NAME"
                     className="form-control input-md"
-                    required=""
+                    required="true"
                     type="text"
+                    value={name}
+                    onChange={(e) => setname(e.target.value)}
                   />
                 </div>
               </div>
@@ -49,8 +91,10 @@ const ProductAdd = () => {
                     name="productPrice"
                     placeholder="PRODUCT PRICE"
                     className="form-control input-md"
-                    required=""
-                    type="text"
+                    required="true"
+                    type="number"
+                    value={price}
+                    onChange={(e) => setprice(e.target.value)}
                   />
                 </div>
               </div>
@@ -66,6 +110,8 @@ const ProductAdd = () => {
                   id="product_description"
                   name="productDescription"
                   rows={5}
+                  value={desc}
+                  onChange={(e) => setdesc(e.target.value)}
                 ></textarea>
               </div>
             </div>
@@ -84,8 +130,10 @@ const ProductAdd = () => {
                     name="productKeyFeature1"
                     placeholder="PRODUCT KEY POINT 1"
                     className="form-control input-md"
-                    required=""
+                    required="true"
                     type="text"
+                    value={kf1}
+                    onChange={(e) => setkf1(e.target.value)}
                   />
                 </div>
               </div>
@@ -102,8 +150,10 @@ const ProductAdd = () => {
                     name="productKeyFeature2"
                     placeholder="PRODUCT KEY POINT 2"
                     className="form-control input-md"
-                    required=""
+                    required="true"
                     type="text"
+                    value={kf2}
+                    onChange={(e) => setkf2(e.target.value)}
                   />
                 </div>
               </div>
@@ -123,8 +173,10 @@ const ProductAdd = () => {
                     name="productKeyFeature3"
                     placeholder="PRODUCT KEY POINT 3"
                     className="form-control input-md"
-                    required=""
+                    required="true"
                     type="text"
+                    value={kf3}
+                    onChange={(e) => setkf3(e.target.value)}
                   />
                 </div>
               </div>
@@ -138,8 +190,10 @@ const ProductAdd = () => {
                     name="productQuantityInStock"
                     placeholder="No Of Stock"
                     className="form-control input-md"
-                    required=""
-                    type="text"
+                    required="true"
+                    type="number"
+                    value={stock}
+                    onChange={(e) => setstock(e.target.value)}
                   />
                 </div>
               </div>

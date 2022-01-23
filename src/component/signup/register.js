@@ -5,24 +5,32 @@ const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [cPassword, setcPassword] = useState("");
   const [error, setError] = useState("");
   const signup = (event) => {
     event.preventDefault();
-    axios
-      .post(`${URL}/signup`, {
-        name: name,
-        email: email,
-        password: password,
-      })
-      .then((user) => {
-        if (user.data.status === 200) {
-          localStorage.setItem("Id", user.data.data.user.id);
-          localStorage.setItem("Token", user.data.data.token);
-          localStorage.setItem("Role", user.data.data.user.role);
-        } else {
-          setError(user.data.error.message);
-        }
-      });
+    if (cPassword === password) {
+      axios
+        .post(`${URL}/signup`, {
+          name: name,
+          email: email,
+          password: password,
+        })
+        .then((user) => {
+          if (user.data.status === 200) {
+            localStorage.setItem("id", user.data.data.user.id);
+            localStorage.setItem("token", user.data.data.user.token);
+            localStorage.setItem(
+              "isAdmin",
+              user.data.data.user.role === "ADMIN" ? true : false
+            );
+          } else {
+            setError(user.data.error.message);
+          }
+        });
+    } else {
+      setError("Password not matches");
+    }
   };
   return (
     <div>
@@ -106,6 +114,8 @@ const Register = () => {
                               id="form3Example4cd"
                               className="form-control"
                               name="confirmPassword"
+                              value={cPassword}
+                              onChange={(e) => setcPassword(e.target.value)}
                             />
                             <label className="form-label" for="form3Example4cd">
                               Repeat your password

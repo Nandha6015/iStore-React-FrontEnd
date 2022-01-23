@@ -2,29 +2,30 @@ import React, { useState, useEffect } from "react";
 import "../home/style.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { URL } from "../../App";
 
 const Products = () => {
   const id = localStorage.getItem("id");
-  const isAdmin = localStorage.getItem("role") === "ADMIN" ? true : false;
-  const [products, setproduct] = useState([]);
+  const isAdmin = localStorage.getItem("isAdmin");
+  const [products, setproducts] = useState([]);
   useEffect(() => {
     axios.get(`${URL}/products`).then((products) => {
-      setproduct(products.data);
+      setproducts(products.data.data.products);
     });
   }, []);
   const deleteProduct = (id) => {
-    axios.delete(`${URL}/manage/products/${id}`);
-    setproduct((oldProducts) => {
-      return oldProducts.filter((prod) => prod.productId !== id);
+    axios.delete(`${URL}/admin/products/${id}`);
+    setproducts((oldProducts) => {
+      return oldProducts.filter((prod) => prod.id !== id);
     });
   };
   const sortPrice = (ascending = true) => {
     const sortedProducts = products.sort((a, b) =>
       ascending
-        ? parseInt(a.productPrice) - parseInt(b.productPrice)
-        : parseInt(b.productPrice) - parseInt(a.productPrice)
+        ? parseInt(a.price) - parseInt(b.price)
+        : parseInt(b.price) - parseInt(a.price)
     );
-    setproduct(sortedProducts);
+    setproducts(sortedProducts);
   };
 
   return (
@@ -59,7 +60,7 @@ const Products = () => {
                 </select>
               </div>
             </div>
-            {id === null ? null : isAdmin ? (
+            {isAdmin ? (
               <div className="card shadow my-5 p-5 justify-content-center">
                 <Link to={"./productadd"} className="justify-content-center">
                   <i className="fas fa-plus-circle mx-3"></i>
@@ -74,45 +75,53 @@ const Products = () => {
         {/* filter section ends */}
         <div className="col-9">
           {products.map((product) => (
-            <div className="card my-5 shadow" key={product.productId}>
+            <div className="card my-5 shadow" key={product.id}>
               <div className="row px-5 py-4">
                 <div
                   className="col-sm-12 col-md-5 col-lg-3 p-3"
                   style={{ maxHeight: 300 }}
                 >
-                  <div value={product.productId}>
+                  <div value={product.id}>
                     <img
-                      src={product.productImgSrc}
+                      src={product.imgSrc}
                       alt="product"
                       style={{ width: "70%" }}
                     />
                   </div>
                 </div>
                 <div className="col-sm-6 col-md-3">
-                  <Link to={`/products/${product.productId}`}>
-                    {product.productName}
-                  </Link>
+                  <Link to={`/products/${product.id}`}>{product.name}</Link>
                   <div className="mt-2 d-flex">
                     <p
                       className="text-muted old-price"
                       style={{ marginRight: 10 }}
                     >
-                      ₹ {product.productPrice * 1.5}
+                      ₹ {product.price * 1.5}
                     </p>
-                    <p> ₹ {product.productPrice}</p>
+                    <p> ₹ {product.price}</p>
                   </div>
                   <div>
                     <p>Free delivery</p>
-                    {id !== null ? (
-                      isAdmin ? (
-                        <p>
-                          InStock:
-                          <span className="text-danger">
-                            {product.productQuantityInStock}
-                          </span>
-                        </p>
-                      ) : null
-                    ) : null}
+                    {isAdmin ? (
+                      <p>
+                        InStock:
+                        <span className="text-danger">
+                          {product.quantityInStock}
+                        </span>
+                      </p>
+                    ) : (
+                      <p
+                        className={`text-${
+                          product.stockStatus === "InStock"
+                            ? "success"
+                            : product.stockStatus === "Hurry, few lefts"
+                            ? "warning"
+                            : "danger"
+                        }`}
+                      >
+                        {product.stockStatus}
+                      </p>
+                    )}
                   </div>
                 </div>
 
@@ -123,30 +132,28 @@ const Products = () => {
                     <li className="col-12">{product.productKeyFeature3}</li>
                   </ul>
                 </div>
-                {id !== null ? (
-                  isAdmin ? (
-                    <div className="col-2">
-                      <div
-                        className="d-flex flex-column justify-content-around"
-                        style={{ height: "100%" }}
+                {isAdmin ? (
+                  <div className="col-2">
+                    <div
+                      className="d-flex flex-column justify-content-around"
+                      style={{ height: "100%" }}
+                    >
+                      <Link
+                        to={`/productedit/${product.id}`}
+                        type="button"
+                        className="btn btn-success"
                       >
-                        <Link
-                          to={`/productedit/${product.productId}`}
-                          type="button"
-                          className="btn btn-success"
-                        >
-                          Edit
-                        </Link>
-                        <button
-                          type="button"
-                          className="btn btn-danger"
-                          onClick={() => deleteProduct(product.productId)}
-                        >
-                          Delete
-                        </button>
-                      </div>
+                        Update
+                      </Link>
+                      <button
+                        type="button"
+                        className="btn btn-danger"
+                        onClick={() => deleteProduct(product.id)}
+                      >
+                        Delete
+                      </button>
                     </div>
-                  ) : null
+                  </div>
                 ) : null}
               </div>
             </div>
