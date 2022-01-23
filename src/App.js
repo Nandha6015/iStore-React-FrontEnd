@@ -17,6 +17,7 @@ import ProductEdit from "./component/product/productedit";
 import Tracker from "./component/tracker/tracker";
 import OrderList from "./component/order/orderlist";
 import ContactForm from "./component/contact/contactform";
+import About from "./component/Aboutus/aboutus.js";
 export const URL = "http://localhost:8089";
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
           <Route exact path={"/tracker"} component={Tracker} />
           <Route exact path={"/orderlist"} component={OrderList} />
           <Route exact path={"/contactform"} component={ContactForm} />
+          <Route exact path={"/aboutus"} component={About} />
         </Switch>
         <Footer />
       </Router>

@@ -196,7 +196,7 @@ const Home = () => {
           </div>
           <div className="row">
             <div className="col-10 mx-auto col-md-6 col-lg-4">
-              <div className="featured-container p-5">
+              <div className="featured-container bg-white p-5">
                 <img
                   src="/special/special-1.png"
                   alt=""
@@ -226,7 +226,7 @@ const Home = () => {
             </div>
 
             <div className="col-10 mx-auto col-md-6 col-lg-4">
-              <div className="featured-container p-5">
+              <div className="featured-container bg-white p-5">
                 <img
                   src="/special/special-2.png"
                   alt=""
@@ -256,7 +256,7 @@ const Home = () => {
             </div>
 
             <div className="col-10 mx-auto col-md-6 col-lg-4">
-              <div className="featured-container p-5">
+              <div className="featured-container bg-white p-5">
                 <img
                   src="/special/special-3.png"
                   alt=""
@@ -286,7 +286,7 @@ const Home = () => {
             </div>
 
             <div className="col-10 mx-auto col-md-6 col-lg-4">
-              <div className="featured-container p-5">
+              <div className="featured-containerbg-white  p-5">
                 <img
                   src="/special/special-4.png"
                   alt=""
@@ -316,7 +316,7 @@ const Home = () => {
             </div>
 
             <div className="col-10 mx-auto col-md-6 col-lg-4">
-              <div className="featured-container p-5">
+              <div className="featured-container bg-white p-5">
                 <img
                   src="/special/special-5.png"
                   alt=""
@@ -346,7 +346,7 @@ const Home = () => {
             </div>
 
             <div className="col-10 mx-auto col-md-6 col-lg-4">
-              <div className="featured-container p-5">
+              <div className="featured-container bg-white p-5">
                 <img
                   src="/special/special-6.png"
                   alt=""
