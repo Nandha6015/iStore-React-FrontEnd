@@ -3,6 +3,7 @@ import page from "../img/pagenotfound.svg";
 import { useState } from "react";
 import axios from "axios";
 import { URL } from "../../App";
+
 const OrderList = () => {
   const id = localStorage.getItem("id");
   const isAdmin = localStorage.getItem("isAdmin") === "true" ? true : false;
@@ -20,6 +21,14 @@ const OrderList = () => {
         setorders(orders.data.data.orders.products);
       });
   }, []);
+
+  const track = (event, oid) => {
+    axios.put(`${URL}/admin/orders/${oid}?track=${event.target.value}`, null, {
+      headers: {
+        Authorization: token,
+      },
+    });
+  };
 
   if (isAdmin === false) {
     return (
@@ -40,7 +49,7 @@ const OrderList = () => {
               <th className="col-2 h4">Image</th>
               <th className="col-3 h4">Product Name</th>
               <th className="col-3 h4">Username</th>
-              <th className="col-2 h4">Action</th>
+              <th className="col-2 h4">Tracker</th>
             </tr>
           </thead>
           <tbody>
@@ -66,11 +75,13 @@ const OrderList = () => {
                   {order.name}
                 </td>
                 <td className="col-sm-12 col-md-2 d-flex align-items-center">
-                  <button type="button" className="btn btn-danger">
-                    Tracker
-                  </button>
-                  {/* </li> */}
-                  {/* </ul> */}
+                  <select onClick={(e) => track(e, order.id)}>
+                    <option value="Stage 1">Confirmed Order</option>
+                    <option value="Stage 2">Processing Order</option>
+                    <option value="Stage 3">Quality Check</option>
+                    <option value="Stage 4">Product Dispatched</option>
+                    <option value="Stage 5">Product Delivered</option>
+                  </select>
                 </td>
               </tr>
             ))}

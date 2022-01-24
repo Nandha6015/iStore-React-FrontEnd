@@ -1,12 +1,35 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { URL } from "../../App";
 import "../home/style.css";
 import logo from "../img/logo.png";
 
 const Navbar = () => {
   const id = localStorage.getItem("id");
   const isAdmin = localStorage.getItem("isAdmin") === "true" ? true : false;
+  const token = localStorage.getItem("token");
   const { pathname } = useLocation();
+  const [count, setcount] = useState(0);
+
+  useEffect(() => {
+    const pollingFunction = () => {
+      axios
+        .get(`${URL}/user/${id}/carts/count`, {
+          headers: {
+            Authorization: token,
+          },
+        })
+        .then((count) => setcount(count.data.data.cart.count));
+    };
+
+    if (id !== null) {
+      const interval = setInterval(pollingFunction, 1000);
+      return () => {
+        clearInterval(interval);
+      };
+    }
+  }, [id]);
 
   return (
     <div>
@@ -61,26 +84,28 @@ const Navbar = () => {
                 Orders
               </Link>
             </li>
-            <li
-              className={`nav-item mx-2 ${
-                pathname === "/contactform" ? "nav-active" : ""
-              }`}
-            >
-              <Link to={"/contactform"} className="nav-link">
-                Contact Us
-              </Link>
-            </li>
-            <li
-              className={`nav-item mx-2 ${
-                pathname === "/contactinbox" ? "nav-active" : ""
-              }`}
-            >
-              <Link to={"/contactinbox"} className="nav-link">
-                Inbox
-              </Link>
-            </li>
+            {!isAdmin ? (
+              <li
+                className={`nav-item mx-2 ${
+                  pathname === "/contactform" ? "nav-active" : ""
+                }`}
+              >
+                <Link to={"/contactform"} className="nav-link">
+                  Contact Us
+                </Link>
+              </li>
+            ) : null}
             {isAdmin ? (
               <>
+                <li
+                  className={`nav-item mx-2 ${
+                    pathname === "/contactinbox" ? "nav-active" : ""
+                  }`}
+                >
+                  <Link to={"/contactinbox"} className="nav-link">
+                    Inbox
+                  </Link>
+                </li>
                 <li
                   className={`nav-item mx-2 ${
                     pathname === "/userdetails" ? "nav-active" : ""
@@ -111,7 +136,9 @@ const Navbar = () => {
         </div>
         <Link to={"/cart"} className="navbar-icon mx-2 navbar-cart-icon">
           <i className="fa fa-shopping-cart" aria-hidden="true"></i>
-          <div className="cart-items">10</div>
+          <div className="cart-items" style={{ fontSize: 15 }}>
+            {count}
+          </div>
         </Link>
         <Link
           to={id === null ? "/login" : "/profile"}

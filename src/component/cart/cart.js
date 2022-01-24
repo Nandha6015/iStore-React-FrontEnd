@@ -51,7 +51,7 @@ const Cart = () => {
     );
   };
   const updateCart = (pid, nos) => {
-    axios.put(`${URL}/user/${id}/cart/${pid}?nos=${nos}`, null, {
+    axios.put(`${URL}/user/${id}/carts/${pid}?nos=${nos}`, null, {
       headers: {
         Authorization: token,
       },
@@ -61,7 +61,7 @@ const Cart = () => {
     setProducts((oldProducts) =>
       oldProducts.filter((product) => product.id !== pid)
     );
-    axios.delete(`${URL}/user/${id}/cart/${pid}`, {
+    axios.delete(`${URL}/user/${id}/carts/${pid}`, {
       headers: {
         Authorization: token,
       },
