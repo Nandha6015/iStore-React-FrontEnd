@@ -18,7 +18,8 @@ import Tracker from "./component/tracker/tracker";
 import OrderList from "./component/order/orderlist";
 import ContactForm from "./component/contact/contactform";
 import About from "./component/Aboutus/aboutus.js";
-export const URL = "http://localhost:8080";
+import Profileimage from "./component/profile/profileimage";
+export const URL = "http://localhost:8089";
 function App() {
   return (
     <div>
@@ -41,6 +42,7 @@ function App() {
           <Route exact path={"/orderlist"} component={OrderList} />
           <Route exact path={"/contactform"} component={ContactForm} />
           <Route exact path={"/aboutus"} component={About} />
+          <Route exact path={"/profileimage"} component={Profileimage} />
         </Switch>
         <Footer />
       </Router>

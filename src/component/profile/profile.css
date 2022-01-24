@@ -843,3 +843,7 @@ input[type="radio"] {
 #profile {
   height: 500px;
 }
+#profile1 {
+  float: right;
+  padding-right: 10px;
+}
