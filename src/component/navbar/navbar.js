@@ -70,6 +70,15 @@ const Navbar = () => {
                 Contact Us
               </Link>
             </li>
+            <li
+              className={`nav-item mx-2 ${
+                pathname === "/contactinbox" ? "nav-active" : ""
+              }`}
+            >
+              <Link to={"/contactinbox"} className="nav-link">
+                Inbox
+              </Link>
+            </li>
             {isAdmin ? (
               <>
                 <li

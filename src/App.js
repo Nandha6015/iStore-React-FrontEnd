@@ -20,7 +20,7 @@ import ContactForm from "./component/contact/contactform";
 import About from "./component/Aboutus/aboutus.js";
 import Profileimage from "./component/profile/profileimage";
 import ContactInbox from "./component/contact/contactinbox";
-export const URL = "http://localhost:8089";
+export const URL = "http://localhost:8080";
 
 function App() {
   return (
