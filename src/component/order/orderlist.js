@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import page from "../img/pagenotfound.svg";
 import { useState } from "react";
 import axios from "axios";
-
+import { URL } from "../../App";
 const OrderList = () => {
   const id = localStorage.getItem("id");
   const isAdmin = localStorage.getItem("isAdmin") === "true" ? true : false;
@@ -11,7 +11,7 @@ const OrderList = () => {
   const [orders, setorders] = useState([]);
   useEffect(() => {
     axios
-      .get(`${URL}/admin/users`, {
+      .get(`${URL}/admin/orders`, {
         headers: {
           Authorization: token,
         },

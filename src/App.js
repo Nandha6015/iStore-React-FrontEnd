@@ -18,6 +18,7 @@ import Tracker from "./component/tracker/tracker";
 import OrderList from "./component/order/orderlist";
 import ContactForm from "./component/contact/contactform";
 import About from "./component/Aboutus/aboutus.js";
+import ContactInbox from "./component/contact/contactinbox";
 export const URL = "http://localhost:8080";
 function App() {
   return (
@@ -36,11 +37,12 @@ function App() {
           <Route exact path={"/profile"} component={Profile} />
           <Route exact path={"/userdetails"} component={UserDetails} />
           <Route exact path={"/addproduct"} component={ProductAdd} />
-          <Route exact path={"/updateproduct"} component={ProductEdit} />
+          <Route exact path={"/updateproduct/:id"} component={ProductEdit} />
           <Route exact path={"/tracker"} component={Tracker} />
           <Route exact path={"/orderlist"} component={OrderList} />
           <Route exact path={"/contactform"} component={ContactForm} />
           <Route exact path={"/aboutus"} component={About} />
+          <Route exact path={"/contactinbox"} component={ContactInbox} />
         </Switch>
         <Footer />
       </Router>
