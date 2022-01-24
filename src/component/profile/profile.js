@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import page from "../img/pagenotfound.svg";
 import { URL } from "../../App";
-
+import { Link } from "react-router-dom";
 import "./profile.css";
 const Profile = () => {
   const id = localStorage.getItem("id");
@@ -94,7 +94,13 @@ const Profile = () => {
                         alt="hai"
                         id="image"
                       />
-                    </div>{" "}
+                      <Link to={"profileimage"}>
+                        <button class="my-2" id="profile2">
+                          {" "}
+                          change profile
+                        </button>
+                      </Link>
+                    </div>
                     <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
                       <img src="profile1.png" className="img-fluid" alt="hai" />
                       <p className="text-danger">{error}</p>
