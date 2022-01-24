@@ -89,13 +89,13 @@ const Profile = () => {
                   <div className="row justify-content-center">
                     <div className="col-md-2 col-lg-5 d-none d-md-block">
                       <img
-                        src="https://bootdey.com/img/Content/avatar/avatar6.png"
-                        className="img-fluid"
+                        src="profile.svg"
+                        className="img-responsive"
                         alt="hai"
                         id="image"
                       />
                       <Link to={"profileimage"}>
-                        <button class="my-2" id="profile2">
+                        <button class=" ms-5 " id="profile2">
                           {" "}
                           change profile
                         </button>
