@@ -75,7 +75,10 @@ const OrderList = () => {
                   {order.name}
                 </td>
                 <td className="col-sm-12 col-md-2 d-flex align-items-center">
-                  <select onClick={(e) => track(e, order.id)}>
+                  <select
+                    onClick={(e) => track(e, order.id)}
+                    value={order.tracker}
+                  >
                     <option value="Stage 1">Confirmed Order</option>
                     <option value="Stage 2">Processing Order</option>
                     <option value="Stage 3">Quality Check</option>

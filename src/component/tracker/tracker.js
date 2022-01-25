@@ -8,6 +8,7 @@ const Tracker = () => {
   const id = localStorage.getItem("id");
   const token = localStorage.getItem("token");
   const { oid } = useParams();
+  const [stage, setstage] = useState();
   const [stage1, setstage1] = useState();
   const [stage2, setstage2] = useState();
   const [stage3, setstage3] = useState();
@@ -22,6 +23,7 @@ const Tracker = () => {
         },
       })
       .then((track) => {
+        setstage(track.data.data.message);
         switch (track.data.data.message) {
           case "Stage 1":
             setstage1("completed");
@@ -74,7 +76,7 @@ const Tracker = () => {
             <span className="text-medium">Shipped Via:</span> UPS Ground
           </div>
           <div className="w-100 text-center py-1 px-2">
-            <span className="text-medium">Status:</span> Checking Quality
+            <span className="text-medium">Status:</span> {stage}
           </div>
           <div className="w-100 text-center py-1 px-2">
             <span className="text-medium">Expected Date:</span> WithIn 2 days
