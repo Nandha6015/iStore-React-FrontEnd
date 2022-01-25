@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useState } from "react";
 import { URL } from "../../App";
 import page from "../img/pagenotfound.svg";
-import img from "../img/3.png";
 
 const ProductAdd = () => {
   const isAdmin = localStorage.getItem("isAdmin") === "true" ? true : false;
@@ -15,36 +14,28 @@ const ProductAdd = () => {
   const [kf2, setkf2] = useState("");
   const [kf3, setkf3] = useState("");
   const [stock, setstock] = useState("");
-  const [img1, setimg1] = useState(img);
-  const [img2, setimg2] = useState(img);
-  const [img3, setimg3] = useState(img);
-  const [img4, setimg4] = useState(img);
-  const [img5, setimg5] = useState(img);
+  const [notice, setnotice] = useState("");
 
-  const addProduct = (event) => {
-    event.preventDefault();
-    axios.post(
-      `${URL}/admin/products`,
-      {
-        name: name,
-        price: price,
-        description: desc,
-        keyFeature1: kf1,
-        keyFeature2: kf2,
-        keyFeature3: kf3,
-        stock: stock,
-        imgsrc1: img1,
-        imgsrc2: img2,
-        imgsrc3: img3,
-        imgsrc4: img4,
-        imgsrc5: img5,
-      },
-      {
-        headers: {
-          Authorization: token,
+  const addProduct = () => {
+    axios
+      .post(
+        `${URL}/admin/products`,
+        {
+          name: name,
+          price: price,
+          description: desc,
+          keyFeature1: kf1,
+          keyFeature2: kf2,
+          keyFeature3: kf3,
+          stock: stock,
         },
-      }
-    );
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      )
+      .then((msg) => setnotice(msg.data.data.message));
   };
 
   if (isAdmin === false) {
@@ -270,8 +261,9 @@ const ProductAdd = () => {
                 name="singlebutton"
                 className="btn btn-lg btn-primary"
               >
-                Add Product
+                Add
               </button>
+              <p className="text-success">{notice}</p>
             </div>
           </div>
         </div>

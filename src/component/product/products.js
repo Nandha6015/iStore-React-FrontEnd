@@ -3,16 +3,17 @@ import "../home/style.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { URL } from "../../App";
-
+import empty from "../img/no-product-found.jpg";
 const Products = () => {
-  const isAdmin = localStorage.getItem("isAdmin");
+  const isAdmin = localStorage.getItem("isAdmin") === "true" ? true : false;
   const token = localStorage.getItem("token");
 
   const [products, setproducts] = useState([]);
 
   useEffect(() => {
-    axios.get(`${URL}/products`).then((products) => {
-      setproducts(products.data.data.products);
+    axios.get(`${URL}/products?isAdmin=${isAdmin}`).then((products) => {
+      if (isAdmin) setproducts(products.data.data.productsList);
+      else setproducts(products.data.data.products);
     });
   }, []);
 
@@ -36,6 +37,14 @@ const Products = () => {
       return sortedProducts;
     });
   };
+
+  if (products.length === 0)
+    return (
+      <div className="d-flex flex-column align-items-center p-5">
+        <img height={400} width={1000} src={empty} alt="empty order" />
+        <p className="display-2"></p>
+      </div>
+    );
 
   return (
     <div>
@@ -70,7 +79,7 @@ const Products = () => {
                 </select>
               </div>
             </div>
-            {isAdmin === "true" ? (
+            {isAdmin ? (
               <div className="card shadow my-5 p-5 text-center">
                 <Link to={"/addproduct"}>
                   <button type="button" className="btn btn-primary">
@@ -112,7 +121,7 @@ const Products = () => {
                   </div>
                   <div>
                     <p>Free delivery</p>
-                    {isAdmin === "true" ? (
+                    {isAdmin ? (
                       <p>
                         InStock:
                         <span className="text-danger">
@@ -142,7 +151,7 @@ const Products = () => {
                     <li className="col-12">{product.keyFeature3}</li>
                   </ul>
                 </div>
-                {isAdmin === "true" ? (
+                {isAdmin ? (
                   <div className="col-2">
                     <div
                       className="d-flex flex-column justify-content-around"

@@ -19,6 +19,7 @@ const Profile = () => {
   const [password, setPassword] = useState("");
   const [address, setAddress] = useState("");
   const [error, setError] = useState("");
+  const [img, setimg] = useState("");
 
   useEffect(() => {
     axios
