@@ -27,12 +27,14 @@ const Products = () => {
     });
   };
   const sortPrice = (ascending = true) => {
-    const sortedProducts = products.sort((a, b) =>
-      ascending
-        ? parseInt(a.price) - parseInt(b.price)
-        : parseInt(b.price) - parseInt(a.price)
-    );
-    setproducts(sortedProducts);
+    setproducts((oldProducts) => {
+      const sortedProducts = [...oldProducts].sort((a, b) =>
+        ascending
+          ? parseInt(a.price) - parseInt(b.price)
+          : parseInt(b.price) - parseInt(a.price)
+      );
+      return sortedProducts;
+    });
   };
 
   return (
@@ -52,6 +54,7 @@ const Products = () => {
                     else sortPrice(false);
                   }}
                 >
+                  <option value="default">Select Option</option>
                   <option value="ascending">Price: low to high</option>
                   <option value="descending">Price: high to low</option>
                 </select>

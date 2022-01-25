@@ -14,6 +14,7 @@ const UserDetails = () => {
   const isAdmin = localStorage.getItem("isAdmin") === "true" ? true : false;
 
   const [users, setUsers] = useState([]);
+  const [isenable, setisenable] = useState();
 
   useEffect(() => {
     axios

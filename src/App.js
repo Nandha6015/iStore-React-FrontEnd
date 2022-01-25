@@ -40,7 +40,7 @@ function App() {
           <Route exact path={"/userdetails"} component={UserDetails} />
           <Route exact path={"/addproduct"} component={ProductAdd} />
           <Route exact path={"/updateproduct/:id"} component={ProductEdit} />
-          <Route exact path={"/tracker"} component={Tracker} />
+          <Route exact path={"/tracker/:oid"} component={Tracker} />
           <Route exact path={"/orderlist"} component={OrderList} />
           <Route exact path={"/contactform"} component={ContactForm} />
           <Route exact path={"/aboutus"} component={About} />

@@ -105,7 +105,7 @@ const Orders = () => {
                   </p>
                 </div>
                 <div className="col-sm-6 col-md-1 ">
-                  <Link to={"/tracker"}>
+                  <Link to={`/tracker/${product.id}`}>
                     <button type="button" class="btn btn-warning">
                       Track
                     </button>

@@ -30,7 +30,7 @@ const Profile = () => {
       .then((user) => {
         setName(user.data.data.profile.name);
         setEmail(user.data.data.profile.email);
-        setPhone(user.data.data.profile.phone);
+        setPhone(user.data.data.profile.phoneNumber);
         setPassword(user.data.data.profile.password);
         setAddress(user.data.data.profile.address);
       });
@@ -112,6 +112,7 @@ const Profile = () => {
                             className="text-muted"
                             id="Name"
                             name="userName"
+                            type="text"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                           />
@@ -125,6 +126,7 @@ const Profile = () => {
                             className="text-muted "
                             id="Email"
                             name="userEmail"
+                            type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                           />
@@ -138,6 +140,7 @@ const Profile = () => {
                             className="text-muted"
                             id="Phone"
                             name="userPhone"
+                            type="text"
                             value={phone}
                             onChange={(e) => setPhone(e.target.value)}
                           />
@@ -151,6 +154,7 @@ const Profile = () => {
                             className="text-muted"
                             id="Password"
                             name="userPassword"
+                            type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                           />
@@ -164,6 +168,7 @@ const Profile = () => {
                             className="text-muted"
                             id="Address"
                             name="userAddress"
+                            type="text"
                             value={address}
                             onChange={(e) => setAddress(e.target.value)}
                           />

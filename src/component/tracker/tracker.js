@@ -1,90 +1,130 @@
 import "./tracker.css";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { URL } from "../../App";
+import page from "../img/pagenotfound.svg";
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import axios from "axios";
 const Tracker = () => {
-  return (
-    <div class="container padding-bottom-3x mb-1">
-      <div class="card mb-3">
-        <div class="p-4 text-center text-white text-lg bg-dark rounded-top">
-          <span class="text-uppercase">Tracking Order No - </span>
-          <span class="text-medium">34VB5540K83</span>
-        </div>
-        <div class="d-flex flex-wrap flex-sm-nowrap justify-content-between py-3 px-2 bg-secondary">
-          <div class="w-100 text-center py-1 px-2">
-            <span class="text-medium">Shipped Via:</span> UPS Ground
-          </div>
-          <div class="w-100 text-center py-1 px-2">
-            <span class="text-medium">Status:</span> Checking Quality
-          </div>
-          <div class="w-100 text-center py-1 px-2">
-            <span class="text-medium">Expected Date:</span> SEP 09, 2017
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="steps d-flex flex-wrap flex-sm-nowrap justify-content-between padding-top-2x padding-bottom-1x">
-            <div class="step completed">
-              <div class="step-icon-wrap">
-                <div class="step-icon">
-                  <i class="fas fa-shopping-cart"></i>
-                </div>
-              </div>
-              <h4 class="step-title">Confirmed Order</h4>
-            </div>
-            <div class="step completed">
-              <div class="step-icon-wrap">
-                <div class="step-icon">
-                  <i class="fas fa-cog"></i>
-                </div>
-              </div>
-              <h4 class="step-title">Processing Order</h4>
-            </div>
-            <div class="step completed">
-              <div class="step-icon-wrap">
-                <div class="step-icon">
-                  <i class="fas fa-medal"></i>
-                </div>
-              </div>
-              <h4 class="step-title">Quality Check</h4>
-            </div>
-            <div class="step">
-              <div class="step-icon-wrap">
-                <div class="step-icon">
-                  <i class="fas fa-car"></i>
-                </div>
-              </div>
-              <h4 class="step-title">Product Dispatched</h4>
-            </div>
-            <div class="step">
-              <div class="step-icon-wrap">
-                <div class="step-icon">
-                  <i class="fas fa-home"></i>
-                </div>
-              </div>
-              <h4 class="step-title">Product Delivered</h4>
-            </div>
-          </div>
-        </div>
+  const id = localStorage.getItem("id");
+  const token = localStorage.getItem("token");
+  const { oid } = useParams();
+  const [stage, setstage] = useState();
+  const [stage1, setstage1] = useState();
+  const [stage2, setstage2] = useState();
+  const [stage3, setstage3] = useState();
+  const [stage4, setstage4] = useState();
+  const [stage5, setstage5] = useState();
+
+  useEffect(() => {
+    axios
+      .get(`${URL}/user/${id}/orders/${oid}`, {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then((track) => {
+        setstage(track.data.data.message);
+        switch (track.data.data.message) {
+          case "Stage 1":
+            setstage1("completed");
+            break;
+          case "Stage 2":
+            setstage1("completed");
+            setstage2("completed");
+            break;
+          case "Stage 3":
+            setstage1("completed");
+            setstage2("completed");
+            setstage3("completed");
+            break;
+          case "Stage 4":
+            setstage1("completed");
+            setstage2("completed");
+            setstage3("completed");
+            setstage4("completed");
+            break;
+          case "Stage 5":
+            setstage1("completed");
+            setstage2("completed");
+            setstage3("completed");
+            setstage4("completed");
+            setstage5("completed");
+            break;
+          default:
+            break;
+        }
+      });
+  }, []);
+
+  if (id === null) {
+    return (
+      <div className="d-flex flex-column align-items-center p-5">
+        <img height={400} width={400} src={page} alt="empty cart" />
+        <p className="display-2">Page Not Found</p>
       </div>
-      <div class="d-flex flex-wrap flex-md-nowrap justify-content-center justify-content-sm-between align-items-center">
-        <div class="custom-control custom-checkbox mr-3">
-          <input
-            class="custom-control-input"
-            type="checkbox"
-            id="notify_me"
-            checked=""
-          />
-          <label class="custom-control-label" for="notify_me">
-            Notify me when order is delivered
-          </label>
+    );
+  }
+  return (
+    <div className="container padding-bottom-3x mb-1">
+      <div className="card mb-3">
+        <div className="p-4 text-center text-white text-lg bg-dark rounded-top">
+          <span className="text-uppercase">Tracking Order No - {oid}</span>
+          <span className="text-medium">{oid}</span>
         </div>
-        <div class="text-left text-sm-right">
-          <a
-            class="btn btn-outline-dark btn-rounded btn-sm"
-            href="orderDetails"
-            data-toggle="modal"
-            data-target="#orderDetails"
-          >
-            View Order Details
-          </a>
+        <div className="d-flex flex-wrap flex-sm-nowrap justify-content-between py-3 px-2 bg-secondary">
+          <div className="w-100 text-center py-1 px-2">
+            <span className="text-medium">Shipped Via:</span> UPS Ground
+          </div>
+          <div className="w-100 text-center py-1 px-2">
+            <span className="text-medium">Status:</span> {stage}
+          </div>
+          <div className="w-100 text-center py-1 px-2">
+            <span className="text-medium">Expected Date:</span> WithIn 2 days
+          </div>
+        </div>
+        <div className="card-body">
+          <div className="steps d-flex flex-wrap flex-sm-nowrap justify-content-between padding-top-2x padding-bottom-1x">
+            <div className={`step ${stage1}`}>
+              <div className="step-icon-wrap">
+                <div className="step-icon">
+                  <i className="fas fa-shopping-cart"></i>
+                </div>
+              </div>
+              <h4 className="step-title">Confirmed Order</h4>
+            </div>
+            <div className={`step ${stage2}`}>
+              <div className="step-icon-wrap">
+                <div className="step-icon">
+                  <i className="fas fa-cog"></i>
+                </div>
+              </div>
+              <h4 className="step-title">Processing Order</h4>
+            </div>
+            <div className={`step ${stage3}`}>
+              <div className="step-icon-wrap">
+                <div className="step-icon">
+                  <i className="fas fa-medal"></i>
+                </div>
+              </div>
+              <h4 className="step-title">Quality Check</h4>
+            </div>
+            <div className={`step ${stage4}`}>
+              <div className="step-icon-wrap">
+                <div className="step-icon">
+                  <i className="fas fa-car"></i>
+                </div>
+              </div>
+              <h4 className="step-title">Product Dispatched</h4>
+            </div>
+            <div className={`step ${stage5}`}>
+              <div className="step-icon-wrap">
+                <div className="step-icon">
+                  <i className="fas fa-home"></i>
+                </div>
+              </div>
+              <h4 className="step-title">Product Delivered</h4>
+            </div>
+          </div>
         </div>
       </div>
     </div>
