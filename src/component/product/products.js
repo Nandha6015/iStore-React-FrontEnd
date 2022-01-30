@@ -63,7 +63,9 @@ const Products = () => {
                     else sortPrice(false);
                   }}
                 >
-                  <option value="default">Select Option</option>
+                  <option value="default" hidden>
+                    Select Option
+                  </option>
                   <option value="ascending">Price: low to high</option>
                   <option value="descending">Price: high to low</option>
                 </select>

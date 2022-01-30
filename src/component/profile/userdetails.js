@@ -4,17 +4,11 @@ import { useState } from "react";
 import page from "../img/pagenotfound.svg";
 import { URL } from "../../App";
 
-// function getRandomNumber() {
-//   return Math.floor(Math.random() * 100) + 1;
-// }
-
 const UserDetails = () => {
-  const id = localStorage.getItem("id");
-  const token = localStorage.getItem("token");
   const isAdmin = localStorage.getItem("isAdmin") === "true" ? true : false;
+  const token = localStorage.getItem("token");
 
   const [users, setUsers] = useState([]);
-  const [isenable, setisenable] = useState();
 
   useEffect(() => {
     axios
@@ -65,8 +59,7 @@ const UserDetails = () => {
                     className="img-responsive mr-3"
                     height="50px"
                     width="50px"
-                    src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                    // src={`https://avatars.dicebear.com/api/female/${getRandomNumber()}.svg`}
+                    src={user.img}
                     alt=""
                   />
                 </td>
@@ -77,13 +70,14 @@ const UserDetails = () => {
                   {user.email}
                 </td>
                 <td className="col-sm-12 col-md-2 d-flex align-items-center">
-                  <button
-                    type="button"
-                    className="btn btn-danger"
-                    onClick={() => able(user.id)}
-                  >
-                    {user.isEnable ? "Disable" : "Enable"}
-                  </button>
+                  <select onClick={() => able(user.id)}>
+                    <option selected={user.isEnable} hidden={user.isEnable}>
+                      Enable
+                    </option>
+                    <option selected={!user.isEnable} hidden={!user.isEnable}>
+                      Disable
+                    </option>
+                  </select>
                 </td>
               </tr>
             ))}
