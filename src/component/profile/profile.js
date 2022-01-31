@@ -1,16 +1,18 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import {
+  useHistory,
+  useLocation,
+} from "react-router-dom/cjs/react-router-dom.min";
 import page from "../img/pagenotfound.svg";
 import { URL } from "../../App";
-import { Link } from "react-router-dom";
 import "./profile.css";
 const Profile = () => {
   const id = localStorage.getItem("id");
-  const isAdmin = localStorage.getItem("isAdmin") === "true" ? true : false;
   const token = localStorage.getItem("token");
 
   const history = useHistory();
+  // const { state } = useLocation();
 
   const [editable, setEditable] = useState(false);
   const [name, setName] = useState("");
@@ -19,21 +21,28 @@ const Profile = () => {
   const [password, setPassword] = useState("");
   const [address, setAddress] = useState("");
   const [error, setError] = useState("");
+  // const [img, setimg] = useState("");
 
   useEffect(() => {
-    axios
-      .get(`${URL}/user/${id}`, {
-        headers: {
-          Authorization: token,
-        },
-      })
-      .then((user) => {
-        setName(user.data.data.profile.name);
-        setEmail(user.data.data.profile.email);
-        setPhone(user.data.data.profile.phoneNumber);
-        setPassword(user.data.data.profile.password);
-        setAddress(user.data.data.profile.address);
-      });
+    if (state !== undefined) {
+      const { link: profileImage } = state;
+      setimg(profileImage);
+    } else {
+      axios
+        .get(`${URL}/user/${id}`, {
+          headers: {
+            Authorization: token,
+          },
+        })
+        .then((user) => {
+          setName(user.data.data.profile.name);
+          setEmail(user.data.data.profile.email);
+          setPhone(user.data.data.profile.phoneNumber);
+          setPassword(user.data.data.profile.password);
+          setAddress(user.data.data.profile.address);
+          // setimg(user.data.data.profile.img);
+        });
+    }
   }, []);
 
   const onSubmit = () => {
@@ -47,6 +56,7 @@ const Profile = () => {
           phoneNumber: phone,
           password: password,
           address: address,
+          // img: img,
         },
         {
           headers: {
@@ -66,6 +76,16 @@ const Profile = () => {
     localStorage.removeItem("isAdmin");
     history.push("/login");
   };
+
+  // const toProfileImage = () => {
+  //   history.push({
+  //     pathname: "/profileimage",
+  //     state: {
+  //       link: img !== "" ? img : undefined,
+  //     },
+  //   });
+  // };
+
   if (id === null) {
     return (
       <div className="d-flex flex-column align-items-center p-5">
@@ -89,17 +109,19 @@ const Profile = () => {
                   <div className="row justify-content-center">
                     <div className="col-md-2 col-lg-5 d-none d-md-block">
                       <img
-                        src="profile/profile.svg"
+                        src={img ? img : "profile.svg"}
                         className="img-responsive"
                         alt="hai"
                         id="image"
                       />
-                      <Link to={"profileimage"}>
-                        <button class=" ms-5 " id="profile2">
-                          {" "}
-                          change profile
-                        </button>
-                      </Link>
+                      {/* <button
+                        class=" ms-5 "
+                        id="profile2"
+                        disable={!editable}
+                        onClick={toProfileImage}
+                      >
+                        change profile
+                      </button> */}
                     </div>
                     <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
                       <img
@@ -117,6 +139,7 @@ const Profile = () => {
                             id="Name"
                             name="userName"
                             type="text"
+                            disable={!editable}
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                           />
@@ -131,6 +154,7 @@ const Profile = () => {
                             id="Email"
                             name="userEmail"
                             type="email"
+                            disable={!editable}
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                           />
@@ -145,6 +169,7 @@ const Profile = () => {
                             id="Phone"
                             name="userPhone"
                             type="text"
+                            disable={!editable}
                             value={phone}
                             onChange={(e) => setPhone(e.target.value)}
                           />
@@ -159,6 +184,7 @@ const Profile = () => {
                             id="Password"
                             name="userPassword"
                             type="password"
+                            disable={!editable}
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                           />
@@ -173,6 +199,7 @@ const Profile = () => {
                             id="Address"
                             name="userAddress"
                             type="text"
+                            disable={!editable}
                             value={address}
                             onChange={(e) => setAddress(e.target.value)}
                           />

@@ -14,6 +14,7 @@ const Tracker = () => {
   const [stage3, setstage3] = useState();
   const [stage4, setstage4] = useState();
   const [stage5, setstage5] = useState();
+  const [date, setDate] = useState("Within 3 days");
 
   useEffect(() => {
     axios
@@ -27,21 +28,25 @@ const Tracker = () => {
         switch (track.data.data.message) {
           case "Stage 1":
             setstage1("completed");
+            setDate("Within 3 days");
             break;
           case "Stage 2":
             setstage1("completed");
             setstage2("completed");
+            setDate("Within 3 days");
             break;
           case "Stage 3":
             setstage1("completed");
             setstage2("completed");
             setstage3("completed");
+            setDate("Within 2 days");
             break;
           case "Stage 4":
             setstage1("completed");
             setstage2("completed");
             setstage3("completed");
             setstage4("completed");
+            setDate("Within 1 days");
             break;
           case "Stage 5":
             setstage1("completed");
@@ -49,6 +54,7 @@ const Tracker = () => {
             setstage3("completed");
             setstage4("completed");
             setstage5("completed");
+            setDate("Delivered");
             break;
           default:
             break;
@@ -68,7 +74,7 @@ const Tracker = () => {
     <div className="container padding-bottom-3x mb-1">
       <div className="card mb-3">
         <div className="p-4 text-center text-white text-lg bg-dark rounded-top">
-          <span className="text-uppercase">Tracking Order No - {oid}</span>
+          <span className="text-uppercase">Tracking Order No - </span>
           <span className="text-medium">{oid}</span>
         </div>
         <div className="d-flex flex-wrap flex-sm-nowrap justify-content-between py-3 px-2 bg-secondary">
@@ -79,7 +85,7 @@ const Tracker = () => {
             <span className="text-medium">Status:</span> {stage}
           </div>
           <div className="w-100 text-center py-1 px-2">
-            <span className="text-medium">Expected Date:</span> WithIn 2 days
+            <span className="text-medium">Expected Date:</span> {date}
           </div>
         </div>
         <div className="card-body">

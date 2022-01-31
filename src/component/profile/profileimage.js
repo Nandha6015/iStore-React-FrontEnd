@@ -1,5 +1,42 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import {
+  useHistory,
+  useLocation,
+} from "react-router-dom/cjs/react-router-dom.min";
+
+const images = [
+  "https://bootstrapious.com/i/snippets/sn-about/avatar-2.png",
+  "https://bootstrapious.com/i/snippets/sn-about/avatar-4.png",
+  "https://bootdey.com/img/Content/avatar/avatar3.png",
+  "https://bootdey.com/img/Content/avatar/avatar7.png",
+  "https://bootdey.com/img/Content/avatar/avatar6.png",
+  "https://bootdey.com/img/Content/avatar/avatar8.png",
+];
+
 const Profileimage = () => {
+  const { state } = useLocation();
+  const history = useHistory();
+  const [selectedImage, setSelectedImage] = useState(0);
+
+  useEffect(() => {
+    if (state !== undefined) {
+      const { link } = state;
+      if (link !== undefined) {
+        const oldSelectedImage = images.findIndex((image) => image === link);
+        if (oldSelectedImage !== -1) setSelectedImage(oldSelectedImage);
+      }
+    }
+  }, [state]);
+
+  const onSubmit = () => {
+    history.push({
+      pathname: "profile/",
+      state: {
+        link: images[selectedImage],
+      },
+    });
+  };
+
   return (
     <div>
       <div className="bg-light py-5">
@@ -12,127 +49,36 @@ const Profileimage = () => {
               </p>
             </div>
           </div>
-          <div className="card my-5  ">
-            <div className="row text-center my-5">
-              <div className="col-xl-3 ms-5  col-sm-6 mb-5">
-                <div className="bg-white rounded shadow-sm py-5 px-4">
-                  <img
-                    src="https://bootstrapious.com/i/snippets/sn-about/avatar-4.png"
-                    alt=""
-                    width="100"
-                    className="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm"
-                  />
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      value=""
-                      id="flexCheckDefault"
+          <div className="card my-5 d-flex flex-column align-items-center p-5">
+            <div className="row text-center">
+              {images.map((image, index) => (
+                <div className="col-12 col-md-4 mb-5">
+                  <div
+                    className={`bg-white border rounded shadow-sm py-5 px-4 ${
+                      selectedImage === index ? "border-primary" : ""
+                    }`}
+                    onClick={() => setSelectedImage(index)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <img
+                      src={image}
+                      alt=""
+                      width="100"
+                      className="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm"
                     />
                   </div>
                 </div>
-              </div>
-
-              <div className="col-xl-3 ms-5  col-sm-6 mb-5">
-                <div className="bg-white rounded shadow-sm py-5 px-4">
-                  <img
-                    src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                    alt=""
-                    width="100"
-                    className="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm"
-                  />
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      value=""
-                      id="flexCheckDefault"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-xl-3 ms-5  col-sm-6 mb-5">
-                <div className="bg-white rounded shadow-sm py-5 px-4">
-                  <img
-                    src="https://bootstrapious.com/i/snippets/sn-about/avatar-2.png"
-                    alt=""
-                    width="100"
-                    className="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm"
-                  />
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      value=""
-                      id="flexCheckDefault"
-                    />
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
-            <div className="row text-center my-5">
-              <div className="col-xl-3 ms-5  col-sm-6 mb-5">
-                <div className="bg-white rounded shadow-sm py-5 px-4">
-                  <img
-                    src="https://bootdey.com/img/Content/avatar/avatar3.png"
-                    alt=""
-                    width="100"
-                    className="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm"
-                  />
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      value=""
-                      id="flexCheckDefault"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-xl-3 ms-5  col-sm-6 mb-5">
-                <div className="bg-white rounded shadow-sm py-5 px-4">
-                  <img
-                    src="https://bootdey.com/img/Content/avatar/avatar6.png"
-                    alt=""
-                    width="100"
-                    className="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm"
-                  />
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      value=""
-                      id="flexCheckDefault"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-xl-3 ms-5  col-sm-6 mb-5">
-                <div className="bg-white rounded shadow-sm py-5 px-4">
-                  <img
-                    src="https://bootdey.com/img/Content/avatar/avatar8.png"
-                    alt=""
-                    width="100"
-                    className="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm"
-                  />
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      value=""
-                      id="flexCheckDefault"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="col-yl-5">
-                <button type="button" class="btn btn-success  " id="profile1">
-                  Submit
-                </button>
-              </div>
+            <div>
+              <button
+                onClick={onSubmit}
+                type="button"
+                class="btn btn-lg btn-success"
+                id="profile1"
+              >
+                Submit
+              </button>
             </div>
           </div>
         </div>

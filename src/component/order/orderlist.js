@@ -77,13 +77,61 @@ const OrderList = () => {
                 <td className="col-sm-12 col-md-2 d-flex align-items-center">
                   <select
                     onClick={(e) => track(e, order.id)}
-                    value={order.tracker}
+                    autoFocus={order.tracker}
                   >
-                    <option value="Stage 1">Confirmed Order</option>
-                    <option value="Stage 2">Processing Order</option>
-                    <option value="Stage 3">Quality Check</option>
-                    <option value="Stage 4">Product Dispatched</option>
-                    <option value="Stage 5">Product Delivered</option>
+                    <option
+                      value="Stage 1"
+                      selected={order.tracker === "Stage 1" ? true : false}
+                      hidden
+                    >
+                      Confirmed Order
+                    </option>
+                    <option
+                      value="Stage 2"
+                      selected={order.tracker === "Stage 2" ? true : false}
+                      hidden={
+                        order.tracker === "Stage 5" ||
+                        order.tracker === "Stage 4" ||
+                        order.tracker === "Stage 3" ||
+                        order.tracker === "Stage 2"
+                          ? true
+                          : false
+                      }
+                    >
+                      Processing Order
+                    </option>
+                    <option
+                      value="Stage 3"
+                      selected={order.tracker === "Stage 3" ? true : false}
+                      hidden={
+                        order.tracker === "Stage 5" ||
+                        order.tracker === "Stage 4" ||
+                        order.tracker === "Stage 3"
+                          ? true
+                          : false
+                      }
+                    >
+                      Quality Check
+                    </option>
+                    <option
+                      value="Stage 4"
+                      selected={order.tracker === "Stage 4" ? true : false}
+                      hidden={
+                        order.tracker === "Stage 5" ||
+                        order.tracker === "Stage 4"
+                          ? true
+                          : false
+                      }
+                    >
+                      Product Dispatched
+                    </option>
+                    <option
+                      value="Stage 5"
+                      selected={order.tracker === "Stage 5" ? true : false}
+                      hidden={order.tracker === "Stage 5" ? true : false}
+                    >
+                      Product Delivered
+                    </option>
                   </select>
                 </td>
               </tr>
