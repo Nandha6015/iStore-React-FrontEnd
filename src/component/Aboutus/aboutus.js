@@ -83,7 +83,7 @@ const About = () => {
             </div>
             <div className="col-lg-6 d-none d-lg-block">
               <img
-                src="about1.png"
+                src="about/about1.png"
                 alt=""
                 className="img-responsive"
                 height={300}
@@ -110,7 +110,7 @@ const About = () => {
             </div>
             <div className="col-lg-5 px-5 mx-auto order-1 order-lg-2">
               <img
-                src="about2.png"
+                src="about/about2.png"
                 alt=""
                 className="img-responsive mb-4 mb-lg-0"
                 height={300}
@@ -120,7 +120,7 @@ const About = () => {
           <div className="row align-items-center">
             <div className="col-lg-5 px-5 mx-auto">
               <img
-                src="about3.png"
+                src="about/about3.png"
                 alt=""
                 className="img-responsive mb-4 mb-lg-0"
                 height={300}

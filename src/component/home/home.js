@@ -1,11 +1,11 @@
 import React from "react";
 import "./style.css";
 import imglogo1 from "../img/company-logos/company-logo-1.png";
-import imglogo2 from "../img/company-logos/company-logo-2.png";
-import imglogo3 from "../img/company-logos/company-logo-3.png";
-import imglogo4 from "../img/company-logos/company-logo-4.png";
-import imglogo5 from "../img/company-logos/company-logo-5.png";
-import imglogo6 from "../img/company-logos/company-logo-6.png";
+// import imglogo2 from "../img/company-logos/company-logo-2.png";
+// import imglogo3 from "../img/company-logos/company-logo-3.png";
+// import imglogo4 from "../img/company-logos/company-logo-4.png";
+// import imglogo5 from "../img/company-logos/company-logo-5.png";
+// import imglogo6 from "../img/company-logos/company-logo-6.png";
 import ipad from "../img/cagetogoryImg/ipad-category.png";
 import airpod from "../img/cagetogoryImg/airpods-category.png";
 import imac from "../img/cagetogoryImg/imac-category.png";
@@ -396,7 +396,7 @@ const Home = () => {
                     />
                   </div>
 
-                  <div className="carousel-item">
+                  {/* <div className="carousel-item">
                     <img
                       src={imglogo2}
                       className="d-block w-100"
@@ -441,17 +441,14 @@ const Home = () => {
                   className="carousel-control-prev"
                   role="button"
                   data-slide="prev"
-                >
-                  <i className="fas fa-arrow-left"></i>
-                </Link>
+                ></Link>
                 <Link
                   to={"#partnerCarousel"}
                   className="carousel-control-next"
                   role="button"
                   data-slide="next"
-                >
-                  <i className="fas fa-arrow-right"></i>
-                </Link>
+                ></Link> */}
+                </div>
               </div>
             </div>
           </div>
