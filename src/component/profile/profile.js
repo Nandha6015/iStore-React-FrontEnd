@@ -24,25 +24,25 @@ const Profile = () => {
   // const [img, setimg] = useState("");
 
   useEffect(() => {
-    if (state !== undefined) {
-      const { link: profileImage } = state;
-      setimg(profileImage);
-    } else {
-      axios
-        .get(`${URL}/user/${id}`, {
-          headers: {
-            Authorization: token,
-          },
-        })
-        .then((user) => {
-          setName(user.data.data.profile.name);
-          setEmail(user.data.data.profile.email);
-          setPhone(user.data.data.profile.phoneNumber);
-          setPassword(user.data.data.profile.password);
-          setAddress(user.data.data.profile.address);
-          // setimg(user.data.data.profile.img);
-        });
-    }
+    // if (state !== undefined) {
+    //   const { link: profileImage } = state;
+    //   setimg(profileImage);
+    // } else {
+    axios
+      .get(`${URL}/user/${id}`, {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then((user) => {
+        setName(user.data.data.profile.name);
+        setEmail(user.data.data.profile.email);
+        setPhone(user.data.data.profile.phoneNumber);
+        setPassword(user.data.data.profile.password);
+        setAddress(user.data.data.profile.address);
+        // setimg(user.data.data.profile.img);
+      });
+    // }
   }, []);
 
   const onSubmit = () => {
@@ -109,7 +109,7 @@ const Profile = () => {
                   <div className="row justify-content-center">
                     <div className="col-md-2 col-lg-5 d-none d-md-block">
                       <img
-                        src={img ? img : "profile.svg"}
+                        src={"profile.svg"}
                         className="img-responsive"
                         alt="hai"
                         id="image"

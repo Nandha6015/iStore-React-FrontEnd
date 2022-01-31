@@ -77,7 +77,7 @@ const OrderList = () => {
                 <td className="col-sm-12 col-md-2 d-flex align-items-center">
                   <select
                     onClick={(e) => track(e, order.id)}
-                    autoFocus={order.tracker}
+                    // autoFocus={order.tracker}
                   >
                     <option
                       value="Stage 1"

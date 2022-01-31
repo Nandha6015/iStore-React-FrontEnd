@@ -97,7 +97,7 @@ const Navbar = () => {
             ) : null}
             {isAdmin ? (
               <>
-                <li
+                {/* <li
                   className={`nav-item mx-2 ${
                     pathname === "/contactinbox" ? "nav-active" : ""
                   }`}
@@ -105,7 +105,7 @@ const Navbar = () => {
                   <Link to={"/contactinbox"} className="nav-link">
                     Inbox
                   </Link>
-                </li>
+                </li> */}
                 <li
                   className={`nav-item mx-2 ${
                     pathname === "/userdetails" ? "nav-active" : ""

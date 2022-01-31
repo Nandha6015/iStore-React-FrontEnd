@@ -111,7 +111,9 @@ const Products = () => {
                   </div>
                 </div>
                 <div className="col-sm-6 col-md-3">
-                  <Link to={`/products/${product.id}`}>{product.name}</Link>
+                  <Link to={`/products/${product.id}`}>
+                    <h5>{product.name}</h5>
+                  </Link>
                   <div className="mt-2 d-flex">
                     <p
                       className="text-muted old-price"
