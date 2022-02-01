@@ -1,18 +1,15 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import {
-  useHistory,
-  useLocation,
-} from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import page from "../img/pagenotfound.svg";
 import { URL } from "../../App";
 import "./profile.css";
+import { Link } from "react-router-dom";
 const Profile = () => {
   const id = localStorage.getItem("id");
   const token = localStorage.getItem("token");
 
   const history = useHistory();
-  // const { state } = useLocation();
 
   const [editable, setEditable] = useState(false);
   const [name, setName] = useState("");
@@ -21,13 +18,9 @@ const Profile = () => {
   const [password, setPassword] = useState("");
   const [address, setAddress] = useState("");
   const [error, setError] = useState("");
-  // const [img, setimg] = useState("");
+  const [img, setimg] = useState("");
 
   useEffect(() => {
-    // if (state !== undefined) {
-    //   const { link: profileImage } = state;
-    //   setimg(profileImage);
-    // } else {
     axios
       .get(`${URL}/user/${id}`, {
         headers: {
@@ -40,9 +33,8 @@ const Profile = () => {
         setPhone(user.data.data.profile.phoneNumber);
         setPassword(user.data.data.profile.password);
         setAddress(user.data.data.profile.address);
-        // setimg(user.data.data.profile.img);
+        setimg(user.data.data.profile.img);
       });
-    // }
   }, []);
 
   const onSubmit = () => {
@@ -56,7 +48,6 @@ const Profile = () => {
           phoneNumber: phone,
           password: password,
           address: address,
-          // img: img,
         },
         {
           headers: {
@@ -76,15 +67,6 @@ const Profile = () => {
     localStorage.removeItem("isAdmin");
     history.push("/login");
   };
-
-  // const toProfileImage = () => {
-  //   history.push({
-  //     pathname: "/profileimage",
-  //     state: {
-  //       link: img !== "" ? img : undefined,
-  //     },
-  //   });
-  // };
 
   if (id === null) {
     return (
@@ -109,25 +91,24 @@ const Profile = () => {
                   <div className="row justify-content-center">
                     <div className="col-md-2 col-lg-5 d-none d-md-block">
                       <img
-                        src={"profile.svg"}
+                        src={img ? img : "profile/profile.svg"}
                         className="img-responsive"
-                        alt="hai"
+                        alt="profile"
                         id="image"
                       />
-                      {/* <button
-                        class=" ms-5 "
+                      <Link
+                        class="btn ms-5 "
                         id="profile2"
-                        disable={!editable}
-                        onClick={toProfileImage}
+                        to={"/profileimage"}
                       >
                         change profile
-                      </button> */}
+                      </Link>
                     </div>
                     <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
                       <img
                         src="profile/profile1.png"
                         className="img-fluid"
-                        alt="hai"
+                        alt="profile"
                       />
                       <p className="text-danger">{error}</p>
                       <div className="d-flex flex-row align-items-center mb-4">

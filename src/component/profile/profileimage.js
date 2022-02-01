@@ -1,8 +1,7 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
-import {
-  useHistory,
-  useLocation,
-} from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { URL } from "../../App";
 
 const images = [
   "https://bootstrapious.com/i/snippets/sn-about/avatar-2.png",
@@ -14,27 +13,27 @@ const images = [
 ];
 
 const Profileimage = () => {
-  const { state } = useLocation();
+  const id = localStorage.getItem("id");
+  const token = localStorage.getItem("token");
   const history = useHistory();
   const [selectedImage, setSelectedImage] = useState(0);
 
-  useEffect(() => {
-    if (state !== undefined) {
-      const { link } = state;
-      if (link !== undefined) {
-        const oldSelectedImage = images.findIndex((image) => image === link);
-        if (oldSelectedImage !== -1) setSelectedImage(oldSelectedImage);
-      }
-    }
-  }, [state]);
-
   const onSubmit = () => {
-    history.push({
-      pathname: "profile/",
-      state: {
-        link: images[selectedImage],
-      },
-    });
+    axios
+      .put(
+        `${URL}/user/${id}?img=true`,
+        {
+          img: `${images[selectedImage]}`,
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      )
+      .then(() => {
+        history.push("/profile");
+      });
   };
 
   return (
