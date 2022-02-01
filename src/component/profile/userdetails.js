@@ -22,12 +22,27 @@ const UserDetails = () => {
       });
   }, []);
 
-  const able = (id) => {
-    axios.put(`${URL}/admin/users/${id}`, null, {
-      headers: {
-        Authorization: token,
-      },
-    });
+  const able = (event, id) => {
+    axios
+      .put(`${URL}/admin/users/${id}?enable=${event.target.value}`, null, {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then(() => {
+        setUsers((old) => {
+          const oldUsers = [...old];
+          let ind;
+          for (let i = 0; i < oldUsers.length; i++) {
+            if (oldUsers[i].id === id) {
+              ind = i;
+              break;
+            }
+          }
+          oldUsers[ind].isEnable = event.target.value === "true" ? true : false;
+          return oldUsers;
+        });
+      });
   };
 
   if (isAdmin === false) {
@@ -70,11 +85,19 @@ const UserDetails = () => {
                   {user.email}
                 </td>
                 <td className="col-sm-12 col-md-2 d-flex align-items-center">
-                  <select onClick={() => able(user.id)}>
-                    <option selected={user.isEnable} hidden={user.isEnable}>
+                  <select onClick={(e) => able(e, user.id)}>
+                    <option
+                      value="true"
+                      selected={user.isEnable}
+                      hidden={user.isEnable}
+                    >
                       Enable
                     </option>
-                    <option selected={!user.isEnable} hidden={!user.isEnable}>
+                    <option
+                      value="false"
+                      selected={!user.isEnable}
+                      hidden={!user.isEnable}
+                    >
                       Disable
                     </option>
                   </select>

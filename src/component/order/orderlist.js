@@ -23,11 +23,27 @@ const OrderList = () => {
   }, []);
 
   const track = (event, oid) => {
-    axios.put(`${URL}/admin/orders/${oid}?track=${event.target.value}`, null, {
-      headers: {
-        Authorization: token,
-      },
-    });
+    axios
+      .put(`${URL}/admin/orders/${oid}?track=${event.target.value}`, null, {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then(() => {
+        setorders((oldOrders_) => {
+          const oldOrder = [...oldOrders_];
+          let i;
+
+          for (let index = 0; index < orders.length; index++) {
+            if (oldOrder[index].id === oid) {
+              i = index;
+              break;
+            }
+          }
+          oldOrder[i].tracker = event.target.value;
+          return oldOrder;
+        });
+      });
   };
 
   if (isAdmin === false) {
@@ -75,10 +91,7 @@ const OrderList = () => {
                   {order.name}
                 </td>
                 <td className="col-sm-12 col-md-2 d-flex align-items-center">
-                  <select
-                    onClick={(e) => track(e, order.id)}
-                    // autoFocus={order.tracker}
-                  >
+                  <select onClick={(e) => track(e, order.id)}>
                     <option
                       value="Stage 1"
                       selected={order.tracker === "Stage 1" ? true : false}
