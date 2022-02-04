@@ -166,11 +166,11 @@ const Cart = () => {
         <div className="col-sm-6 mx-auto col d-flex justify-content-center flex-wrap">
           <Link to={"products"}>
             <button type="button" className="btn btn-black my-2">
-              Continue shipping
+              Continue shopping
             </button>
           </Link>
           <Link to={"payment"}>
-            <button type="button" className="btn btn-yellow ml-2 my-2">
+            <button type="button" className="btn btn-yellow ml-2 m-2">
               checkout
             </button>
           </Link>
