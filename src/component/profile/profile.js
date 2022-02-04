@@ -120,7 +120,7 @@ const Profile = () => {
                             id="Name"
                             name="userName"
                             type="text"
-                            disable={!editable}
+                            disabled={!editable}
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                           />
@@ -135,7 +135,7 @@ const Profile = () => {
                             id="Email"
                             name="userEmail"
                             type="email"
-                            disable={!editable}
+                            disabled={!editable}
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                           />
@@ -150,7 +150,7 @@ const Profile = () => {
                             id="Phone"
                             name="userPhone"
                             type="text"
-                            disable={!editable}
+                            disabled={!editable}
                             value={phone}
                             onChange={(e) => setPhone(e.target.value)}
                           />
@@ -165,7 +165,7 @@ const Profile = () => {
                             id="Password"
                             name="userPassword"
                             type="password"
-                            disable={!editable}
+                            disabled={!editable}
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                           />
@@ -180,7 +180,7 @@ const Profile = () => {
                             id="Address"
                             name="userAddress"
                             type="text"
-                            disable={!editable}
+                            disabled={!editable}
                             value={address}
                             onChange={(e) => setAddress(e.target.value)}
                           />

@@ -137,7 +137,7 @@ const Products = () => {
                         className={`text-${
                           product.stockStatus === "InStock"
                             ? "success"
-                            : product.stockStatus === "Hurry, few lefts"
+                            : product.stockStatus === "few lefts"
                             ? "warning"
                             : "danger"
                         }`}
