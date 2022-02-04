@@ -23,6 +23,16 @@ const Payment = () => {
       })
       .then(() => history.push("/orders"));
   };
+
+  //  if (id === null) {
+  //    return (
+  //      <div className="d-flex flex-column align-items-center p-5">
+  //        <img height={400} width={400} src={page} alt="Not Found" />
+  //        <p className="display-2">Page Not Found</p>
+  //      </div>
+  //    );
+  //  }
+
   return (
     <div>
       <section className="vh-100" style={{ "background-color": "white" }}>

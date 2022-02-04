@@ -1,6 +1,74 @@
-import React from "react";
 import "./address.css";
-const address = () => {
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { URL } from "../../App";
+const Address = () => {
+  const id = localStorage.getItem("id");
+  const token = localStorage.getItem("token");
+
+  const [editable, setEditable] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [state, setState] = useState("");
+  const [city, setCity] = useState("");
+  const [zip, setZip] = useState("");
+  const [notice, setNotice] = useState("");
+
+  useEffect(() => {
+    axios
+      .get(`${URL}/user/${id}`, {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then((user) => {
+        setName(user.data.data.profile.name);
+        setEmail(user.data.data.profile.email);
+        setPhone(user.data.data.profile.phoneNumber);
+        setAddress(user.data.data.profile.address);
+        setState(user.data.data.profile.state);
+        setCity(user.data.data.profile.city);
+        setZip(user.data.data.profile.zip);
+      });
+  }, []);
+
+  const onSubmit = () => {
+    axios
+      .put(
+        `${URL}/user/${id}`,
+        {
+          name: name,
+          email: email,
+          phoneNumber: phone,
+          address: address,
+          state: state,
+          city: city,
+          zip: zip,
+        },
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
+      )
+      .then((user) => {
+        setNotice(user.data.data.message);
+      });
+    setEditable(false);
+  };
+
+  //  if (id === null) {
+  //    return (
+  //      <div className="d-flex flex-column align-items-center p-5">
+  //        <img height={400} width={400} src={page} alt="Not Found" />
+  //        <p className="display-2">Page Not Found</p>
+  //      </div>
+  //    );
+  //  }
+
   return (
     <div>
       <div class="container py-5">
@@ -23,31 +91,39 @@ const address = () => {
                 <div class="col-xl-6">
                   <div class="card-body p-md-5 text-black">
                     <h3 class="mb-4 text-uppercase">Delivery Info</h3>
-
+                    <p className="text-danger">{notice}</p>
                     <div class="row">
                       <div class="form-outline mb-4">
                         <input
                           type="text"
                           id="form3Example3"
                           class="form-control form-control-lg"
+                          disabled={!editable}
+                          value={name}
+                          onChange={(e) => setName(e.target.value)}
+                          required
                         />
                         <label class="form-label" for="form3Example3">
                           Full Name
                         </label>
                       </div>
                     </div>
-
-                    <div class="form-outline mb-4">
-                      <input
-                        type="text"
-                        id="form3Example8"
-                        class="form-control form-control-lg"
-                      />
-                      <label class="form-label" for="form3Example8">
-                        Address
-                      </label>
+                    <div class="row">
+                      <div class="form-outline mb-4">
+                        <input
+                          type="text"
+                          id="form3Example3"
+                          class="form-control form-control-lg"
+                          disabled={!editable}
+                          value={address}
+                          onChange={(e) => setAddress(e.target.value)}
+                          required
+                        />
+                        <label class="form-label" for="form3Example3">
+                          Address
+                        </label>
+                      </div>
                     </div>
-
                     <div class="row">
                       <div class="col-md-6 mb-4">
                         <div class="form-outline">
@@ -55,6 +131,10 @@ const address = () => {
                             type="text"
                             id="form3Example1m"
                             class="form-control form-control-lg"
+                            disabled={!editable}
+                            value={state}
+                            onChange={(e) => setState(e.target.value)}
+                            required
                           />
                           <label class="form-label" for="form3Example1m">
                             state
@@ -67,6 +147,10 @@ const address = () => {
                             type="text"
                             id="form3Example1n"
                             class="form-control form-control-lg"
+                            disabled={!editable}
+                            value={city}
+                            onChange={(e) => setCity(e.target.value)}
+                            required
                           />
                           <label class="form-label" for="form3Example1n">
                             city
@@ -82,6 +166,10 @@ const address = () => {
                             type="text"
                             id="form3Example1m"
                             class="form-control form-control-lg"
+                            disabled={!editable}
+                            value={zip}
+                            onChange={(e) => setZip(e.target.value)}
+                            required
                           />
                           <label class="form-label" for="form3Example1m">
                             zip
@@ -94,6 +182,10 @@ const address = () => {
                             type="text"
                             id="form3Example1n"
                             class="form-control form-control-lg"
+                            disabled={!editable}
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
+                            required
                           />
                           <label class="form-label" for="form3Example1n">
                             Phone number
@@ -107,6 +199,9 @@ const address = () => {
                         type="text"
                         id="form3Example2"
                         class="form-control form-control-lg"
+                        disabled={!editable}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                       />
                       <label class="form-label" for="form3Example2">
                         Email
@@ -115,20 +210,33 @@ const address = () => {
 
                     <div class="d-flex justify-content-end pt-3">
                       <button
+                        className="btn btn-primary btn-lg ms-2"
                         type="button"
-                        id="button"
-                        class="btn btn-yellow btn-lg ms-2"
-                        // style="background-color:hsl(210, 100%, 50%) "
+                        id="submit"
+                        onclick="submit();"
+                        // style="float:right; width: 60px;"
+                        hidden={!editable}
+                        onClick={() => onSubmit()}
+                      >
+                        Submit
+                      </button>
+                      <button
+                        className="btn btn-yellow btn-lg ms-2"
+                        type="button"
+                        id="edit"
+                        onClick={() => setEditable(true)}
+                        hidden={editable}
+                        // style="float:right; width: 60px;"
                       >
                         Edit
                       </button>
-                      <button
+                      <Link
+                        class="btn btn-yellow btn-lg ms-2 "
                         type="button"
-                        id="button"
-                        class="btn btn-yellow btn-lg ms-2"
+                        to={"/payment"}
                       >
                         Next
-                      </button>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -141,4 +249,4 @@ const address = () => {
   );
 };
 
-export default address;
+export default Address;
