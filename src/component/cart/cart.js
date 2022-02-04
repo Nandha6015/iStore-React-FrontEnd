@@ -169,7 +169,7 @@ const Cart = () => {
               Continue shopping
             </button>
           </Link>
-          <Link to={"payment"}>
+          <Link to={"address"}>
             <button type="button" className="btn btn-yellow ml-2 m-2">
               checkout
             </button>

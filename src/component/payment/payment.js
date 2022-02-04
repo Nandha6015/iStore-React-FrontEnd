@@ -2,6 +2,7 @@ import axios from "axios";
 import React from "react";
 import { useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import page from "../img/pagenotfound.svg";
 import { URL } from "../../App";
 
 import "./payment.css";
@@ -23,6 +24,16 @@ const Payment = () => {
       })
       .then(() => history.push("/orders"));
   };
+
+  if (id === null) {
+    return (
+      <div className="d-flex flex-column align-items-center p-5">
+        <img height={400} width={400} src={page} alt="Not Found" />
+        <p className="display-2">Page Not Found</p>
+      </div>
+    );
+  }
+
   return (
     <div>
       <section className="vh-100" style={{ "background-color": "white" }}>
