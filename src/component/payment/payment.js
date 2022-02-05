@@ -37,7 +37,7 @@ const Payment = () => {
                   <div className="row justify-content-center">
                     <div className="col-md-2 col-lg-5 d-none d-md-block">
                       <img
-                        src="payment/payment1.png"
+                        src="payment1.png"
                         className="img-responsive mx-5 my-5"
                         alt=""
                         height={400}
