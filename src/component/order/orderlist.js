@@ -49,7 +49,7 @@ const OrderList = () => {
   if (isAdmin === false) {
     return (
       <div className="d-flex flex-column align-items-center p-5">
-        <img height={400} width={400} src={page} alt="Not Found" />
+        <img height={400} width={400} src={page} alt="Page Not Found" />
         <p className="display-2">Page Not Found</p>
       </div>
     );
@@ -91,7 +91,7 @@ const OrderList = () => {
                   {order.name}
                 </td>
                 <td className="col-sm-12 col-md-2 d-flex align-items-center">
-                  <select onClick={(e) => track(e, order.id)}>
+                  <select onChange={(e) => track(e, order.id)}>
                     <option
                       value="Stage 1"
                       selected={order.tracker === "Stage 1" ? true : false}

@@ -15,6 +15,7 @@ const ProductEdit = () => {
   const [kf2, setkf2] = useState("");
   const [kf3, setkf3] = useState("");
   const [stock, setstock] = useState("");
+  const [category, setCategory] = useState("");
   const [notice, setnotice] = useState("");
   useEffect(() => {
     axios
@@ -31,6 +32,7 @@ const ProductEdit = () => {
         setkf1(product.data.data.product.keyFeature1);
         setkf2(product.data.data.product.keyFeature2);
         setkf3(product.data.data.product.keyFeature3);
+        setCategory(product.data.data.product.category);
       });
   }, []);
   const update = () => {
@@ -45,6 +47,7 @@ const ProductEdit = () => {
           keyFeature2: kf2,
           keyFeature3: kf3,
           stock: stock,
+          category: category,
         },
         {
           headers: {
@@ -57,7 +60,7 @@ const ProductEdit = () => {
   if (isAdmin === false) {
     return (
       <div className="d-flex flex-column align-items-center p-5">
-        <img height={400} width={400} src={page} alt="Not Found" />
+        <img height={400} width={400} src={page} alt="Page Not Found" />
         <p className="display-2">Page Not Found</p>
       </div>
     );
@@ -185,6 +188,25 @@ const ProductEdit = () => {
                   type="number"
                   value={stock}
                   onChange={(e) => setstock(e.target.value)}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="col-12 row">
+            <div className="form-group col-sm-12 col-md-6">
+              <label className="col-12 control-label" for="category">
+                Category
+              </label>
+              <div className="col-12 mt-2">
+                <input
+                  id="category"
+                  name="category"
+                  placeholder="category"
+                  className="form-control input-md"
+                  required="true"
+                  type="text"
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
                 />
               </div>
             </div>

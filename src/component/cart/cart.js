@@ -74,7 +74,7 @@ const Cart = () => {
   if (products.length === 0)
     return (
       <div className="d-flex flex-column align-items-center p-5">
-        <img height={400} width={400} src={emptyCartImg} alt="empty cart" />
+        <img height={400} width={400} src={emptyCartImg} alt="Empty Cart" />
         <p className="display-2">Cart is Empty</p>
       </div>
     );
