@@ -61,7 +61,7 @@ const OrderList = () => {
     }
   };
 
-  if (isAdmin === false) {
+  if (isAdmin === false || id === null) {
     return (
       <div className="d-flex flex-column align-items-center p-5">
         <img height={400} width={400} src={page} alt="Page Not Found" />
@@ -157,7 +157,7 @@ const OrderList = () => {
                     <option
                       value="Stage 5"
                       selected={order.tracker === "Stage 5"}
-                      hidden={order.tracker !== "Stage 5"}
+                      hidden
                     >
                       Product Delivered
                     </option>

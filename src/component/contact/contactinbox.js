@@ -6,7 +6,7 @@ const inbox = [{ id: 1, name: "giri", message: "hai" }];
 const ContactInbox = () => {
   return (
     <div>
-      <section className="">
+      <section className="card my-3 shadow">
         <div className="row px-5 py-4 text-uppercase">
           <div className="row ">
             <div className=" col-md-2 text-center ">
@@ -23,17 +23,17 @@ const ContactInbox = () => {
       </section>
       {inbox.map((user) => (
         <div>
-          <div className="card my-3 shadow">
+          <div className="">
             <div className="row px-5 py-4">
               <div className="row ">
                 <div className="  col-md-2 text-center">
                   <p className="text-uppercase">{user.id}</p>
                 </div>
                 <div className="col-md-4 text-center">
-                  <p className="text-uppercase">{user.name}</p>
+                  <p className="text">{user.name}</p>
                 </div>
                 <div className="col-md-6">
-                  <div className="text-uppercase">{user.message}</div>
+                  <div className="text">{user.message}</div>
                 </div>
               </div>
             </div>

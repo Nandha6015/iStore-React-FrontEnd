@@ -4,6 +4,7 @@ import { URL } from "../../App";
 import page from "../img/pagenotfound.svg";
 
 const ProductAdd = () => {
+  const id = localStorage.getItem("id");
   const isAdmin = localStorage.getItem("isAdmin") === "true" ? true : false;
   const token = localStorage.getItem("token");
 
@@ -40,7 +41,7 @@ const ProductAdd = () => {
       .then((msg) => setnotice(msg.data.data.message));
   };
 
-  if (isAdmin === false) {
+  if (isAdmin === false || id === null) {
     return (
       <div className="d-flex flex-column align-items-center p-5">
         <img height={400} width={400} src={page} alt="Page Not Found" />

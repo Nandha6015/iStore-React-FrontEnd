@@ -56,6 +56,7 @@ const Tracker = () => {
         if (track.data.data.tracker.isCancel) {
           setstage("cancelled");
           setDate("cancelled");
+          setCancel(true);
         }
       });
   }, [cancel]);
@@ -143,7 +144,12 @@ const Tracker = () => {
           </div>
         </div>
       </div>
-      <button type="button" class="btn btn-danger" onClick={cancelling}>
+      <button
+        type="button"
+        class="btn btn-danger"
+        onClick={cancelling}
+        disabled={stage === "Stage 5" || cancel}
+      >
         Cancel
       </button>
     </div>
