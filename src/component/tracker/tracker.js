@@ -14,7 +14,8 @@ const Tracker = () => {
   const [stage3, setstage3] = useState();
   const [stage4, setstage4] = useState();
   const [stage5, setstage5] = useState();
-  const [date, setDate] = useState("Within 3 days");
+  const [date, setDate] = useState();
+  const [cancel, setCancel] = useState(false);
 
   useEffect(() => {
     axios
@@ -24,32 +25,25 @@ const Tracker = () => {
         },
       })
       .then((track) => {
-        setstage(track.data.data.message);
-        switch (track.data.data.message) {
-          case "Stage 1":
-            setstage1("completed");
-            setDate("Within 3 days");
-            break;
+        setstage(track.data.data.tracker.tracker);
+        setDate("Within 3 days");
+        setstage1("completed");
+        switch (track.data.data.tracker.tracker) {
           case "Stage 2":
-            setstage1("completed");
             setstage2("completed");
-            setDate("Within 3 days");
             break;
           case "Stage 3":
-            setstage1("completed");
             setstage2("completed");
             setstage3("completed");
             setDate("Within 2 days");
             break;
           case "Stage 4":
-            setstage1("completed");
             setstage2("completed");
             setstage3("completed");
             setstage4("completed");
             setDate("Within 1 days");
             break;
           case "Stage 5":
-            setstage1("completed");
             setstage2("completed");
             setstage3("completed");
             setstage4("completed");
@@ -59,8 +53,24 @@ const Tracker = () => {
           default:
             break;
         }
+        if (track.data.data.tracker.isCancel) {
+          setstage("cancelled");
+          setDate("cancelled");
+        }
       });
-  }, []);
+  }, [cancel]);
+
+  const cancelling = () => {
+    axios
+      .put(`${URL}/user/${id}/orders/${oid}`, null, {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then(() => {
+        setCancel(true);
+      });
+  };
 
   if (id === null) {
     return (
@@ -133,6 +143,9 @@ const Tracker = () => {
           </div>
         </div>
       </div>
+      <button type="button" class="btn btn-danger" onClick={cancelling}>
+        Cancel
+      </button>
     </div>
   );
 };

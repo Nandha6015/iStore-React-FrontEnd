@@ -8,7 +8,7 @@ const OrderList = () => {
   const id = localStorage.getItem("id");
   const isAdmin = localStorage.getItem("isAdmin") === "true" ? true : false;
   const token = localStorage.getItem("token");
-
+  const [track, setTrack] = useState(true);
   const [orders, setorders] = useState([]);
   useEffect(() => {
     axios
@@ -20,30 +20,45 @@ const OrderList = () => {
       .then((orders) => {
         setorders(orders.data.data.orders.products);
       });
-  }, []);
+  }, [track]);
 
-  const track = (event, oid) => {
-    axios
-      .put(`${URL}/admin/orders/${oid}?track=${event.target.value}`, null, {
-        headers: {
-          Authorization: token,
-        },
-      })
-      .then(() => {
-        setorders((oldOrders_) => {
-          const oldOrder = [...oldOrders_];
-          let i;
+  const tracker = (event, oid) => {
+    if (event.target.value !== "cancelled") {
+      axios
+        .put(`${URL}/admin/orders/${oid}?track=${event.target.value}`, null, {
+          headers: {
+            Authorization: token,
+          },
+        })
+        .then(() => {
+          setorders((oldOrders_) => {
+            const oldOrder = [...oldOrders_];
+            let i;
 
-          for (let index = 0; index < orders.length; index++) {
-            if (oldOrder[index].id === oid) {
-              i = index;
-              break;
+            for (let index = 0; index < orders.length; index++) {
+              if (oldOrder[index].id === oid) {
+                i = index;
+                break;
+              }
             }
-          }
-          oldOrder[i].tracker = event.target.value;
-          return oldOrder;
+            oldOrder[i].tracker = event.target.value;
+            return oldOrder;
+          });
+        })
+        .then(() => {
+          setTrack(!track);
         });
-      });
+    } else {
+      axios
+        .put(`${URL}/user/${id}/orders/${oid}`, null, {
+          headers: {
+            Authorization: token,
+          },
+        })
+        .then(() => {
+          setTrack(!track);
+        });
+    }
   };
 
   if (isAdmin === false) {
@@ -63,8 +78,9 @@ const OrderList = () => {
             <tr className="row">
               <th className="col-2 h4">Order id</th>
               <th className="col-2 h4">Image</th>
-              <th className="col-3 h4">Product Name</th>
-              <th className="col-3 h4">Username</th>
+              <th className="col-2 h4">Product Name</th>
+              <th className="col-2 h4">Username</th>
+              <th className="col-2 h4">Delivery</th>
               <th className="col-2 h4">Tracker</th>
             </tr>
           </thead>
@@ -84,66 +100,81 @@ const OrderList = () => {
                   />
                 </td>
 
-                <td className="col-sm-12 col-md-3 d-flex align-items-center">
+                <td className="col-sm-12 col-md-2 d-flex align-items-center">
                   {order.pname}
                 </td>
-                <td className="col-sm-12 col-md-3 d-flex align-items-center">
+                <td className="col-sm-12 col-md-2 d-flex align-items-center">
                   {order.name}
                 </td>
                 <td className="col-sm-12 col-md-2 d-flex align-items-center">
-                  <select onChange={(e) => track(e, order.id)}>
+                  {order.dname == null ? "-" : order.dname}
+                </td>
+                <td className="col-sm-12 col-md-2 d-flex align-items-center">
+                  <select onChange={(e) => tracker(e, order.id)}>
                     <option
                       value="Stage 1"
-                      selected={order.tracker === "Stage 1" ? true : false}
+                      selected={order.tracker === "Stage 1"}
                       hidden
                     >
                       Confirmed Order
                     </option>
                     <option
                       value="Stage 2"
-                      selected={order.tracker === "Stage 2" ? true : false}
+                      selected={order.tracker === "Stage 2"}
                       hidden={
+                        order.tracker === "cancelled" ||
                         order.tracker === "Stage 5" ||
                         order.tracker === "Stage 4" ||
                         order.tracker === "Stage 3" ||
                         order.tracker === "Stage 2"
-                          ? true
-                          : false
                       }
                     >
                       Processing Order
                     </option>
                     <option
                       value="Stage 3"
-                      selected={order.tracker === "Stage 3" ? true : false}
+                      selected={order.tracker === "Stage 3"}
                       hidden={
+                        order.tracker === "cancelled" ||
                         order.tracker === "Stage 5" ||
                         order.tracker === "Stage 4" ||
                         order.tracker === "Stage 3"
-                          ? true
-                          : false
                       }
                     >
                       Quality Check
                     </option>
                     <option
                       value="Stage 4"
-                      selected={order.tracker === "Stage 4" ? true : false}
+                      selected={order.tracker === "Stage 4"}
                       hidden={
+                        order.tracker === "cancelled" ||
                         order.tracker === "Stage 5" ||
                         order.tracker === "Stage 4"
-                          ? true
-                          : false
                       }
                     >
                       Product Dispatched
                     </option>
                     <option
                       value="Stage 5"
-                      selected={order.tracker === "Stage 5" ? true : false}
-                      hidden={order.tracker === "Stage 5" ? true : false}
+                      selected={order.tracker === "Stage 5"}
+                      hidden={order.tracker !== "Stage 5"}
                     >
                       Product Delivered
+                    </option>
+                    <option
+                      value="cancelled"
+                      hidden={
+                        order.tracker === "cancelled" ||
+                        order.tracker === "Stage 5"
+                      }
+                    >
+                      Cancel
+                    </option>
+                    <option
+                      selected={order.tracker === "cancelled"}
+                      hidden={true}
+                    >
+                      Cancelled
                     </option>
                   </select>
                 </td>
