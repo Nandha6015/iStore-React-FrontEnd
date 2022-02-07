@@ -74,7 +74,7 @@ const UserDetails = () => {
                     className="img-responsive mr-3"
                     height="50px"
                     width="50px"
-                    src={user.img}
+                    src={user.img ? user.img : "profile/profile.svg"}
                     alt=""
                   />
                 </td>
