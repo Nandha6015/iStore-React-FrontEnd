@@ -20,6 +20,7 @@ import ContactForm from "./component/contact/contactform";
 import About from "./component/Aboutus/aboutus.js";
 import Profileimage from "./component/profile/profileimage";
 import Address from "./component/order/address";
+import DeliveryList from "./component/delivery/delivery";
 
 export const URL = "http://localhost:8080";
 
@@ -47,6 +48,7 @@ function App() {
           <Route exact path={"/aboutus"} component={About} />
           <Route exact path={"/profileimage"} component={Profileimage} />
           <Route exact path={"/address"} component={Address} />
+          <Route exact path={"/Delivery"} component={DeliveryList} />
         </Switch>
         <Footer />
       </Router>

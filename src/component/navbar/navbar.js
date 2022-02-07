@@ -84,6 +84,15 @@ const Navbar = () => {
                 Orders
               </Link>
             </li>
+            <li
+              className={`nav-item mx-2 ${
+                pathname === "/delivery" ? "nav-active" : ""
+              }`}
+            >
+              <Link to={"/delivery"} className="nav-link">
+                Delivery
+              </Link>
+            </li>
             {!isAdmin ? (
               <li
                 className={`nav-item mx-2 ${
