@@ -1,82 +1,45 @@
 import React from "react";
 import "./contactinbox.css";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Link } from "react-router-dom";
-import InboxMessage from "./inboxmessage";
 
-const inbox = [
-  {
-    name: "giri",
-    message: "hai",
-    img: "https://bootdey.com/img/Content/avatar/avatar2.png",
-  },
-  {
-    name: "nandha",
-    message: "haiii",
-    img: "https://bootdey.com/img/Content/avatar/avatar7.png",
-  },
-  {
-    name: "ashraff",
-    message: "bye",
-    img: "https://bootdey.com/img/Content/avatar/avatar6.png",
-  },
-];
+const inbox = [{ id: 1, name: "giri", message: "hai" }];
+
 const ContactInbox = () => {
   return (
     <div>
-      <div class="container pb-5 md-8 ">
-        <div class="row">
-          <div class="heading">
-            <h1>Admin Inbox</h1>
+      <section className="">
+        <div className="row px-5 py-4 text-uppercase">
+          <div className="row ">
+            <div className=" col-md-2 text-center ">
+              <p className="text-uppercase">Id</p>
+            </div>
+            <div className=" col-md-4  text-center">
+              <p className="text-uppercase">Name</p>
+            </div>
+            <div className=" col-md-6  ">
+              <p className="text-uppercase">Message</p>
+            </div>
           </div>
         </div>
-
-        <div class="row">
-          <div class="conversation-wrap col-md-3">
-            {inbox.map((user) => (
-              <Link to={"/inboxmessage"}>
-                {" "}
-                <div class="media conversation">
-                  <a class="pull-left" href="#">
-                    <img
-                      class="media-object img-circle"
-                      id="style1"
-                      src={user.img}
-                    />
-                  </a>
-
-                  <div class="media-body">
-                    {" "}
-                    <h5 class="media-heading">{user.name}</h5>
-                    <small class="text-muted">{user.message}</small>
-                  </div>
+      </section>
+      {inbox.map((user) => (
+        <div>
+          <div className="card my-3 shadow">
+            <div className="row px-5 py-4">
+              <div className="row ">
+                <div className="  col-md-2 text-center">
+                  <p className="text-uppercase">{user.id}</p>
                 </div>
-              </Link>
-            ))}
-          </div>
-          <div class="message-wrap col-md-8">
-            <div class="msg-wrap">
-              <div class="media msg ">
-                <Router>
-                  <Route
-                    exact
-                    path={"/inboxmessage/:id"}
-                    component={InboxMessage}
-                  />
-                </Router>
+                <div className="col-md-4 text-center">
+                  <p className="text-uppercase">{user.name}</p>
+                </div>
+                <div className="col-md-6">
+                  <div className="text-uppercase">{user.message}</div>
+                </div>
               </div>
             </div>
           </div>
-
-          {/* <div class="message-wrap col-md-8">
-            <div class="msg-wrap">
-              <div class="media msg ">
-                <div class="media-body"></div>
-              </div>
-            </div>
-          </div> */}
         </div>
-      </div>
+      ))}
     </div>
   );
 };
