@@ -82,8 +82,8 @@ const Products = () => {
                   className="form-select mt-2"
                 >
                   <option value={"all"}>All</option>
-                  <option value={"airpod"}>Airpod</option>
                   <option value={"airtag"}>Airtag</option>
+                  <option value={"airpod"}>Airpod</option>
                   <option value={"iphone"}>iPhone</option>
                   <option value={"imac"}>iMac</option>
                   <option value={"macbook"}>Macbook</option>

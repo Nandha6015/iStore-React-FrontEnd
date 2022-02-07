@@ -8,6 +8,8 @@ import logo from "../img/logo.png";
 const Navbar = () => {
   const id = localStorage.getItem("id");
   const isAdmin = localStorage.getItem("isAdmin") === "true" ? true : false;
+  const isDelivery =
+    localStorage.getItem("isDelivery") === "true" ? true : false;
   const token = localStorage.getItem("token");
   const { pathname } = useLocation();
   const [count, setcount] = useState(0);
@@ -84,23 +86,14 @@ const Navbar = () => {
                 Orders
               </Link>
             </li>
-            <li
-              className={`nav-item mx-2 ${
-                pathname === "/delivery" ? "nav-active" : ""
-              }`}
-            >
-              <Link to={"/delivery"} className="nav-link">
-                Delivery
-              </Link>
-            </li>
-            {!isAdmin ? (
+            {isDelivery ? (
               <li
                 className={`nav-item mx-2 ${
-                  pathname === "/contactform" ? "nav-active" : ""
+                  pathname === "/delivery" ? "nav-active" : ""
                 }`}
               >
-                <Link to={"/contactform"} className="nav-link">
-                  Contact Us
+                <Link to={"/delivery"} className="nav-link">
+                  Delivery
                 </Link>
               </li>
             ) : null}
@@ -124,7 +117,6 @@ const Navbar = () => {
                     User List
                   </Link>
                 </li>
-
                 <li
                   className={`nav-item mx-2 ${
                     pathname === "/orderlist" ? "nav-active" : ""
@@ -135,7 +127,17 @@ const Navbar = () => {
                   </Link>
                 </li>
               </>
-            ) : null}
+            ) : (
+              <li
+                className={`nav-item mx-2 ${
+                  pathname === "/contactform" ? "nav-active" : ""
+                }`}
+              >
+                <Link to={"/contactform"} className="nav-link">
+                  Contact Us
+                </Link>
+              </li>
+            )}
           </ul>
         </div>
         <div className="navbar-icons d-none d-lg-flex">

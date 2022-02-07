@@ -143,7 +143,12 @@ const Tracker = () => {
           </div>
         </div>
       </div>
-      <button type="button" class="btn btn-danger" onClick={cancelling}>
+      <button
+        type="button"
+        class="btn btn-danger"
+        onClick={cancelling}
+        disabled={stage === "Stage 5"}
+      >
         Cancel
       </button>
     </div>

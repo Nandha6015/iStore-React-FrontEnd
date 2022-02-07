@@ -40,7 +40,7 @@ const ProductAdd = () => {
       .then((msg) => setnotice(msg.data.data.message));
   };
 
-  if (isAdmin === false) {
+  if (isAdmin === false || id === null) {
     return (
       <div className="d-flex flex-column align-items-center p-5">
         <img height={400} width={400} src={page} alt="Page Not Found" />

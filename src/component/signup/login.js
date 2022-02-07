@@ -25,6 +25,10 @@ const Login = () => {
           "isAdmin",
           user.data.data.user.role === "ADMIN" ? true : false
         );
+        localStorage.setItem(
+          "isDelivery",
+          user.data.data.user.role === "DELIVER" ? true : false
+        );
         history.push("/");
       })
       .catch((user) => {
