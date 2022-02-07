@@ -16,7 +16,6 @@ const Profile = () => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
-  const [address, setAddress] = useState("");
   const [error, setError] = useState("");
   const [img, setimg] = useState("");
 
@@ -32,7 +31,6 @@ const Profile = () => {
         setEmail(user.data.data.profile.email);
         setPhone(user.data.data.profile.phoneNumber);
         setPassword(user.data.data.profile.password);
-        setAddress(user.data.data.profile.address);
         setimg(user.data.data.profile.img);
       });
   }, []);
@@ -47,7 +45,6 @@ const Profile = () => {
           email: email,
           phoneNumber: phone,
           password: password,
-          address: address,
         },
         {
           headers: {
@@ -120,7 +117,7 @@ const Profile = () => {
                             id="Name"
                             name="userName"
                             type="text"
-                            disable={!editable}
+                            disabled={!editable}
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                           />
@@ -135,7 +132,7 @@ const Profile = () => {
                             id="Email"
                             name="userEmail"
                             type="email"
-                            disable={!editable}
+                            disabled={!editable}
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                           />
@@ -150,7 +147,7 @@ const Profile = () => {
                             id="Phone"
                             name="userPhone"
                             type="text"
-                            disable={!editable}
+                            disabled={!editable}
                             value={phone}
                             onChange={(e) => setPhone(e.target.value)}
                           />
@@ -165,28 +162,12 @@ const Profile = () => {
                             id="Password"
                             name="userPassword"
                             type="password"
-                            disable={!editable}
+                            disabled={!editable}
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                           />
                         </div>
                       </div>
-                      <div className="d-flex flex-row align-items-center mb-4">
-                        <i className="fas fa-home fa-lg me-3 fa-fw"></i>
-                        <div className="form-outline flex-fill mb-0">
-                          <h6>Address</h6>
-                          <input
-                            className="text-muted"
-                            id="Address"
-                            name="userAddress"
-                            type="text"
-                            disable={!editable}
-                            value={address}
-                            onChange={(e) => setAddress(e.target.value)}
-                          />
-                        </div>
-                      </div>
-
                       <div className="form-group mt-3">
                         <button
                           className="btn btn-danger m-2"

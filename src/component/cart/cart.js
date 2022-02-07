@@ -74,7 +74,7 @@ const Cart = () => {
   if (products.length === 0)
     return (
       <div className="d-flex flex-column align-items-center p-5">
-        <img height={400} width={400} src={emptyCartImg} alt="empty cart" />
+        <img height={400} width={400} src={emptyCartImg} alt="Empty Cart" />
         <p className="display-2">Cart is Empty</p>
       </div>
     );
@@ -166,11 +166,11 @@ const Cart = () => {
         <div className="col-sm-6 mx-auto col d-flex justify-content-center flex-wrap">
           <Link to={"products"}>
             <button type="button" className="btn btn-black my-2">
-              Continue shipping
+              Continue shopping
             </button>
           </Link>
-          <Link to={"payment"}>
-            <button type="button" className="btn btn-yellow ml-2 my-2">
+          <Link to={"address"}>
+            <button type="button" className="btn btn-yellow ml-2 m-2">
               checkout
             </button>
           </Link>

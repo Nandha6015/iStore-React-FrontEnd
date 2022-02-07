@@ -85,7 +85,7 @@ const UserDetails = () => {
                   {user.email}
                 </td>
                 <td className="col-sm-12 col-md-2 d-flex align-items-center">
-                  <select onClick={(e) => able(e, user.id)}>
+                  <select onChange={(e) => able(e, user.id)}>
                     <option
                       value="true"
                       selected={user.isEnable}

@@ -19,8 +19,8 @@ import OrderList from "./component/order/orderlist";
 import ContactForm from "./component/contact/contactform";
 import About from "./component/Aboutus/aboutus.js";
 import Profileimage from "./component/profile/profileimage";
+import Address from "./component/order/address";
 import ContactInbox from "./component/contact/contactinbox";
-import ContactMessage from "./component/contact/inboxmessage";
 export const URL = "http://localhost:8089";
 
 function App() {
@@ -47,6 +47,7 @@ function App() {
           <Route exact path={"/aboutus"} component={About} />
           <Route exact path={"/profileimage"} component={Profileimage} />
           <Route exact path={"/contactinbox"} component={ContactInbox} />
+          <Route exact path={"/address"} component={Address} />
         </Switch>
         <Footer />
       </Router>
