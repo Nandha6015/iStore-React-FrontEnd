@@ -62,6 +62,7 @@ const Profile = () => {
     localStorage.removeItem("id");
     localStorage.removeItem("token");
     localStorage.removeItem("isAdmin");
+    localStorage.removeItem("isDelivery");
     history.push("/login");
   };
 

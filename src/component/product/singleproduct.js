@@ -12,6 +12,7 @@ const Singleproudct = () => {
   const [activeImage, setActiveImage] = useState("imgSrc1");
   const [inCart, setinCart] = useState(false);
   const [notice, setnotice] = useState("");
+  const [isClicked, setIsClicked] = useState(false);
 
   useEffect(() => {
     axios
@@ -33,6 +34,15 @@ const Singleproudct = () => {
         }
       });
   }, []);
+
+  const notify = () => {
+    localStorage.setItem("notify", product.id);
+    setIsClicked(true);
+    setnotice("Will get notified");
+    setTimeout(() => {
+      setnotice("");
+    }, 2000);
+  };
 
   const addToCart = () => {
     if (id === null) {
@@ -166,25 +176,38 @@ const Singleproudct = () => {
               </ul>
               <p className="lead text-muted">{product.description}</p>
 
-              {inCart ? (
-                <div>
-                  <button
-                    className="btn btn-dark my-2 mx-2"
-                    onClick={removeFromCart}
-                  >
-                    Remove from Cart
-                  </button>
-                  <p className="text-success">{notice}</p>
-                </div>
+              {product.quantityInStock !== 0 ? (
+                inCart ? (
+                  <div>
+                    <button
+                      className="btn btn-dark my-2 mx-2"
+                      onClick={removeFromCart}
+                    >
+                      Remove from Cart
+                    </button>
+                    <p className="text-success">{notice}</p>
+                  </div>
+                ) : (
+                  <div>
+                    <button
+                      className="btn btn-warning my-2 mx-2"
+                      onClick={addToCart}
+                    >
+                      Add To Cart
+                    </button>
+                    <p className="text-danger">{notice}</p>
+                  </div>
+                )
               ) : (
                 <div>
                   <button
-                    className="btn btn-yellow my-2 mx-2"
-                    onClick={addToCart}
+                    className="btn btn-warning my-2 mx-2"
+                    onClick={notify}
+                    disabled={isClicked}
                   >
-                    Add To Cart
+                    Notify me !
                   </button>
-                  <p className="text-danger">{notice}</p>
+                  <p className="text-success">{notice}</p>
                 </div>
               )}
             </div>

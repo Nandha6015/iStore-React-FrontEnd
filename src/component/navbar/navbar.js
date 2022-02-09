@@ -6,20 +6,21 @@ import "../home/style.css";
 import logo from "../img/logo.png";
 import "bootstrap/dist/css/bootstrap.css";
 import { useRef } from "react";
-
 import { Overlay } from "react-bootstrap";
+import { BsX, BsDot } from "react-icons/bs";
 
 const Navbar = () => {
   const id = localStorage.getItem("id");
   const isAdmin = localStorage.getItem("isAdmin") === "true" ? true : false;
   const isDelivery =
     localStorage.getItem("isDelivery") === "true" ? true : false;
+  const pid = localStorage.getItem("notify");
   const token = localStorage.getItem("token");
   const { pathname } = useLocation();
   const [count, setcount] = useState(0);
   const [show, setShow] = useState(false);
   const target = useRef(null);
-  const [prod, setProd] = useState("");
+  const [prod, setProd] = useState([]);
   const [isAvailable, setIsAvailable] = useState(false);
 
   useEffect(() => {
@@ -31,6 +32,14 @@ const Navbar = () => {
           },
         })
         .then((count) => setcount(count.data.data.cart.count));
+      if (pid !== null) {
+        axios.get(`${URL}/products/${pid}?track=true`).then((product) => {
+          if (product.data.data.message === "Yes") {
+            setIsAvailable(true);
+            setProd(product.data.data.product);
+          } else setIsAvailable(false);
+        });
+      }
     };
 
     if (id !== null) {
@@ -39,7 +48,7 @@ const Navbar = () => {
         clearInterval(interval);
       };
     }
-  }, [id]);
+  }, [id, pid]);
 
   return (
     <div>
@@ -153,11 +162,21 @@ const Navbar = () => {
             <i className="fas fa-search"></i>
           </div>
         </div>
-        <i
-          className="navbar-icon mx-2 fas fa-bell"
-          ref={target}
-          onClick={() => setShow(!show)}
-        ></i>
+        <div className="navbar-icon mx-2 navbar-cart-icon">
+          <i
+            className="fas fa-bell"
+            ref={target}
+            onClick={() => {
+              setShow(!show);
+            }}
+          ></i>
+          {isAvailable && (
+            <div
+              className="cart-items"
+              style={{ width: 10, height: 10, top: 4, right: -2.5 }}
+            />
+          )}
+        </div>
         <Overlay target={target.current} show={show} placement="left">
           {({ placement, arrowProps, show: _show, popper, ...props }) => (
             <div class="shadow">
@@ -168,6 +187,7 @@ const Navbar = () => {
                   padding: "2px 10px",
                   color: "black",
                   borderRadius: 3,
+                  width: 500,
                   ...props.style,
                 }}
               >
@@ -177,15 +197,23 @@ const Navbar = () => {
                       {isAvailable ? (
                         <div class="d-flex">
                           <img
-                            src={prod.img}
+                            src={prod.imgSrc}
                             height="80"
-                            alt=""
+                            alt="product"
                             class="avatar-md rounded-circle"
                           />
                           <div class="ms-3">
                             <h5 class=" my-2">{prod.name}</h5>
-                            <p class="text-success ">is now available !</p>
+                            <p class="text-success ">is available now!</p>
                           </div>
+                          <BsX
+                            style={{ width: 30, height: 30 }}
+                            onClick={() => {
+                              setIsAvailable(false);
+                              setProd(null);
+                              localStorage.removeItem("notify");
+                            }}
+                          />
                         </div>
                       ) : (
                         <div>

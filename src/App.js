@@ -23,7 +23,7 @@ import Address from "./component/order/address";
 import DeliveryList from "./component/delivery/delivery";
 import ContactInbox from "./component/contact/contactinbox";
 
-export const URL = "http://localhost:8089";
+export const URL = "http://localhost:8080";
 
 function App() {
   return (

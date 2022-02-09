@@ -55,7 +55,12 @@ const ProductEdit = () => {
           },
         }
       )
-      .then((msg) => setnotice(msg.data.data.message));
+      .then((msg) => {
+        setnotice(msg.data.data.message);
+        setTimeout(() => {
+          setnotice("");
+        }, 2000);
+      });
   };
   if (isAdmin === false || id === null) {
     return (

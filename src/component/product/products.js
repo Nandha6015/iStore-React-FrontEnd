@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { URL } from "../../App";
 import empty from "../img/no-product-found.jpg";
+import { FaPencilAlt } from "react-icons/fa";
 const Products = () => {
   const isAdmin = localStorage.getItem("isAdmin") === "true" ? true : false;
   const token = localStorage.getItem("token");

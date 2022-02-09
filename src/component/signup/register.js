@@ -31,7 +31,12 @@ const Register = () => {
           );
           history.push("/");
         })
-        .catch((user) => setError(user.response.data.error[0].message));
+        .catch((user) => {
+          setError(user.response.data.error[0].message);
+          setTimeout(() => {
+            setError("");
+          }, 2000);
+        });
     } else {
       setError("Password not matches");
     }
