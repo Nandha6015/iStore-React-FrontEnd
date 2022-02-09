@@ -22,6 +22,7 @@ import Profileimage from "./component/profile/profileimage";
 import Address from "./component/order/address";
 import DeliveryList from "./component/delivery/delivery";
 import ContactInbox from "./component/contact/contactinbox";
+
 export const URL = "http://localhost:8089";
 
 function App() {

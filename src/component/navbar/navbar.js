@@ -4,6 +4,10 @@ import { Link, useLocation } from "react-router-dom";
 import { URL } from "../../App";
 import "../home/style.css";
 import logo from "../img/logo.png";
+import "bootstrap/dist/css/bootstrap.css";
+import { useRef } from "react";
+
+import { Overlay } from "react-bootstrap";
 
 const Navbar = () => {
   const id = localStorage.getItem("id");
@@ -13,6 +17,10 @@ const Navbar = () => {
   const token = localStorage.getItem("token");
   const { pathname } = useLocation();
   const [count, setcount] = useState(0);
+  const [show, setShow] = useState(false);
+  const target = useRef(null);
+  const [prod, setProd] = useState("");
+  const [isAvailable, setIsAvailable] = useState(false);
 
   useEffect(() => {
     const pollingFunction = () => {
@@ -145,6 +153,52 @@ const Navbar = () => {
             <i className="fas fa-search"></i>
           </div>
         </div>
+        <i
+          className="navbar-icon mx-2 fas fa-bell"
+          ref={target}
+          onClick={() => setShow(!show)}
+        ></i>
+        <Overlay target={target.current} show={show} placement="left">
+          {({ placement, arrowProps, show: _show, popper, ...props }) => (
+            <div class="shadow">
+              <div
+                {...props}
+                style={{
+                  backgroundColor: "white",
+                  padding: "2px 10px",
+                  color: "black",
+                  borderRadius: 3,
+                  ...props.style,
+                }}
+              >
+                <div class="list-group-item bg-light">
+                  <div class="row">
+                    <div class="col">
+                      {isAvailable ? (
+                        <div class="d-flex">
+                          <img
+                            src={prod.img}
+                            height="80"
+                            alt=""
+                            class="avatar-md rounded-circle"
+                          />
+                          <div class="ms-3">
+                            <h5 class=" my-2">{prod.name}</h5>
+                            <p class="text-success ">is now available !</p>
+                          </div>
+                        </div>
+                      ) : (
+                        <div>
+                          <p>No notification </p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </Overlay>
         <Link to={"/cart"} className="navbar-icon mx-2 navbar-cart-icon">
           <i className="fa fa-shopping-cart" aria-hidden="true"></i>
           <div className="cart-items" style={{ fontSize: 15 }}>
